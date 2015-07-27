@@ -4,20 +4,11 @@
 
 Copyright 2011, Philippine Seven Corporation and affiliates. All rights reserved.
 
-The information contained in this document is confidential and intended for merchants who will be integrating to the 7-CONNECT gateway. Copying and distribution of this document to unauthorizedparties is prohibited.
+The information contained in this document is confidential and intended for merchants who will be integrating to the 7-CONNECT gateway. Copying and distribution of this document to unauthorized parties is prohibited.
 
 The information contained herein is subject to change without notice and is not warranted to be error-free. If you find any errors, please report them to us in writing.
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
-
-## I. Overview
-
-    jason
-    jason
-    
+## I. Overview    
 
 Welcome to the 7-CONNECT Merchant Integration Guide.
 
