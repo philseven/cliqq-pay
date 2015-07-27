@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="./img/favicon.ico">
+
+	<title>7-CONNECT Merchant Integration Guide</title>
+
+        <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="./css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="./css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body class="homepage">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href=".">7-CONNECT Merchant Integration Guide</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#merchant-integration-guide">Merchant Integration Guide</a></li>
+        
+            <li><a href="#i-overview">I. Overview</a></li>
+        
+            <li><a href="#ii-getting-started">II. Getting Started</a></li>
+        
+            <li><a href="#iii-7-connect-web-services">III. 7-Connect Web Services</a></li>
+        
+            <li><a href="#iv-merchant-web-services">IV. Merchant Web Services</a></li>
+        
+            <li><a href="#v-transaction-inquiry">V. Transaction Inquiry</a></li>
+        
+            <li><a href="#vi-appendix">VI. APPENDIX</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="merchant-integration-guide">Merchant Integration Guide</h1>
+<p>7-CONNECT Merchant Integration Guide</p>
+<p>Copyright 2011, Philippine Seven Corporation and affiliates. All rights reserved.</p>
+<p>The information contained in this document is confidential and intended for merchants who will be integrating to the 7-CONNECT gateway. Copying and distribution of this document to unauthorizedparties is prohibited.</p>
+<p>The information contained herein is subject to change without notice and is not warranted to be error-free. If you find any errors, please report them to us in writing.</p>
+<pre><code>mkdocs.yml    # The configuration file.
+docs/
+    index.md  # The documentation homepage.
+    ...       # Other markdown pages, images and other files.
+</code></pre>
+<h2 id="i-overview">I. Overview</h2>
+<pre><code>jason
+jason
+</code></pre>
+<p>Welcome to the 7-CONNECT Merchant Integration Guide.</p>
+<p>7-CONNECT is 7-Eleven's platform for e-commerce businesses that enables cash payment convenience for your customers. Customers will be able to pay for online purchases at any 7-Eleven store.</p>
+<p>7-CONNECT features the following:</p>
+<ul>
+<li>24/7  cash payment at all 7-Eleven stores</li>
+<li>Increases your market beyond credit card holders</li>
+<li>Easier and faster than bank deposits</li>
+<li>Zero risk of fraud and chargebacks</li>
+<li>Real time notification of payment to your transaction systems</li>
+</ul>
+<p>As a merchant, you will have access to new customers who do not have credit cards or who refuse to use them online. This opens up opportunities for you. There are no chargebacks or fraud to worry about. All completed transactions are guaranteed to be remitted to you.</p>
+<h2 id="ii-getting-started">II. Getting Started</h2>
+<p>This guide assumes you have a working knowledge of the following:</p>
+<ul>
+<li>HTTP and webservice concepts</li>
+<li>SHA-1 hashing</li>
+</ul>
+<p>Integrating your website to 7-CONNECT will require development of two points:</p>
+<ul>
+<li>7-CONNECT Reference Request: You will need to request for a 7-CONNECT Reference which will be used by customers to pay at the store.</li>
+<li>Merchant Payment API: This URL will enable 7-Connect to notify your system in realtime whenever the customer pays at the store.</li>
+</ul>
+<p>These URLs will be used:</p>
+<ul>
+<li>For Testing - <a href="http://testpay.7-eleven.com.ph:8888/transact">http://testpay.7-eleven.com.ph:8888/transact</a></li>
+<li>For Live Production - <a href="https://pay.7-eleven.com.ph/transact">https://pay.7-eleven.com.ph/transact</a></li>
+</ul>
+<p>To get the latest information and graphic logos, please visit the site: http://7-connect.philseven.com</p>
+<h2 id="iii-7-connect-web-services">III. 7-Connect Web Services</h2>
+<h3 id="a-7-connect-reference">A. 7-Connect Reference</h3>
+<p>7-Connect Reference is a 12-digit number issued by the 7-Connect gateway. This reference number will be presented at the store transact customer's purchase under 7-Connect.</p>
+<h4 id="1-creating-a-payment-reference">1. Creating a payment reference</h4>
+<p><strong>a.) Via a redirect page –</strong> After customer checks out and choose 7-Connect as a payment option, merchant will send a request to generate a reference number. They will be then automatically redirected to the payment instruction page. This means that merchants don't have to create a payment instruction page.  This page contains the transaction details and the 7-Connect reference number issued for the transaction.</p>
+<p><img alt="diagram" src="./01-diagram.png" /></p>
+<ol>
+<li>Customer selects <strong>7-CONNECT</strong> as Payment Mode in Checkout.</li>
+<li>Merchant Site sends a 7-CONNECT Reference Request to the 7-CONNECT Gateway.</li>
+<li>7-CONNECT Gateway displays the following instruction page displaying the Merchant details and the 7-CONNECT Reference.  At this point, the Customer can:</li>
+</ol>
+<p><img alt="diagram" src="./02-instruction.png" /></p>
+<p>7-CONNECT Gateway displays the following instruction page displaying the Merchant details and the 7-CONNECT Reference.  At this point, the Customer can:</p>
+<ol>
+<li>Write down the 7-CONNECT Reference </li>
+<li>
+<p>Print the page</p>
+</li>
+<li>
+<p>Customer selects <strong>Continue Browsing</strong>.</p>
+</li>
+<li>7-CONNECT Gateway redirects to the Merchant's Success URL.</li>
+<li>Merchant Site displays the Order Confirmation page.</li>
+</ol>
+<p><strong>a.1) Request Parameters</strong></p>
+<p>Using HTTP Post or Get, the merchant site has to provide the 7-CONNECT Gateway with    the parameters it requires to generate a 7-CONNECT Reference.  You will be provided with your own Merchant ID and Transaction Key after completing the merchant agreement.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>merchantID</td>
+<td>Text (15)</td>
+<td>Required</td>
+<td>Merchant's ID as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td>merchantRef</td>
+<td>Text (40)</td>
+<td>Required</td>
+<td>Merchant's Reference Number</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>Number (12, 2)</td>
+<td>Required</td>
+<td>Transaction amount.  Format: XXXXXXXXXX.XX</td>
+</tr>
+<tr>
+<td>expDate</td>
+<td>Number (14)</td>
+<td>Optional</td>
+<td>Transaction's expiration date/time.Format: yyyyMMddHHmmssIf not specified, blank or malformed, the expiry date is set to the value defined in the merchant settings which is 2880 minutes.</td>
+</tr>
+<tr>
+<td>successURL</td>
+<td>Text (300)</td>
+<td>Required</td>
+<td>The page to which 7-CONNECT redirects to after the user clicks on the Continue Browsing button.</td>
+</tr>
+<tr>
+<td>failURL</td>
+<td>Text (300)</td>
+<td>Required</td>
+<td>The page to which 7-CONNECT redirects to after a failed transaction.</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Text</td>
+<td>Required</td>
+<td>Transaction Security TokenTo create this, get the SHA-1 digest of:     merchantID + merchantRef + {transactionKey}PHP code:$token = sha1($merchantID . $merchantRef . '{' . $transactionKey . '}'); transactionKey as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td>transactionDescription</td>
+<td>Text(3000)</td>
+<td>Optional</td>
+<td>Will be shown in the customer LCD screen and payment instruction page (max of 3000 characters)</td>
+</tr>
+<tr>
+<td>receiptRemarks</td>
+<td>Text(660)</td>
+<td>Optional</td>
+<td>Will be printed in the receipt (if none, defaults to {merchantID}</td>
+</tr>
+<tr>
+<td>email</td>
+<td>Text</td>
+<td>Optional</td>
+<td>Used for notifications from 7-CONNECT to the customer. If not provided by the merchant, a button will appear in the instruction page to allow the customer to enter their email address.</td>
+</tr>
+<tr>
+<td>payLoad</td>
+<td>Text (3000)</td>
+<td>Optional for website only integrationRequired if service is available through CLiQQ</td>
+<td>This field can be set to other relevant transaction information that will be passed to the merchant's postback URL (e.g. Account Number, Customer Contact Number, etc.).This field is needed since the 7­Connect reference number may be generated by another device. That device will generate the payLoad contents and the payLoad contents will then be passed to the merchant's postback URL upon transaction payment. If merchant plans to integrate with CLiQQ, this will be <strong>REQUIRED.</strong> This will contain details of the transaction provided by the customer.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>returnPaymentDetails</td>
+<td>Text (1)</td>
+<td>Optional</td>
+<td>Value can either be Y or N or blank. If the value is Y, the gateway will include the paymentDetails when posting to the merchant postback URL when payment is made at the store.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>a.2) Sample Code</strong></p>
+<p>This php code will display a form asking for a merchant reference and amount. Submitting this will display the payment instruction page containing the 7-CONNECT Reference.</p>
+<p>transact.php</p>
+<pre><code>&lt;?php
+
+if (isset($\_REQUEST['submit'])) {
+
+ $merchantRef = $\_REQUEST['merchantRef'];
+
+ $amount = $\_REQUEST['amount'];
+
+ if (!is\_numeric($amount)) {
+
+  $errormsg = &quot;Invalid amount.&quot;;
+
+ }
+
+ $transactURL = 'http://testpay.7-eleven.com.ph:8888/transact';
+
+ $inquireURL = 'http:// testpay.7-eleven.com.ph:8888/inquire';
+
+ $transactionKey = '628e936f45884030ac1f34bcde9c28efa6ae9c839623b45b8942bd4490e1f05d';
+
+ $merchantID = '7-Eleven';
+
+ $successURL = $\_SERVER['SERVER\_NAME'];
+
+ $failURL = $\_SERVER['SERVER\_NAME'];
+
+ $token = sha1($merchantID . $merchantRef . '{' . $transactionKey . '}');
+
+ //set variables
+
+ $fields = array(
+
+    'merchantID'=&gt;$merchantID,
+
+    'merchantRef'=&gt;$merchantRef,
+
+    'amount'=&gt;$amount,
+
+    'successURL'=&gt;$successURL,
+
+    'failURL'=&gt;$failURL,
+
+    'token'=&gt;$token
+
+   );
+
+ $params = http\_build\_query($fields);
+
+ header(&quot;Location: $transactURL?$params&quot;);
+
+}
+
+if (isset($error)) {
+
+ echo &quot;Invalid Amount. Please enter again.&quot;;
+
+}
+
+?&gt;
+
+&lt;h1&gt;7-CONNECT Test Request&lt;/h1&gt;
+
+&lt;form method=&quot;post&quot;&gt;
+
+&lt;table&gt;
+
+&lt;tr&gt;
+
+&lt;td&gt;Merchant Reference:&lt;/td&gt;
+
+&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;merchantRef&quot;&gt;&lt;/td&gt;
+
+&lt;/tr&gt;
+
+&lt;tr&gt;
+
+&lt;td&gt;Amount:&lt;/td&gt;
+
+&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;amount&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+
+&lt;tr&gt;
+
+&lt;td&gt;&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Submit to 7-CONNECT&quot;&gt;&lt;/td&gt;
+
+&lt;/tr&gt;
+
+&lt;/table&gt;
+
+&lt;/form&gt;
+</code></pre>
+
+<p><strong>b). Creation of payment reference over a web service –</strong> This allows more control on how payment instruction should be delivered to customers. Merchant will be the one responsible to display the payment instructions with the 7-Connect Reference Number. This is a web service that receives an HTTP POST request and returns a JSON response. Sends the specified data in a POST request to  the  HTTP server,  in  the  same  way  that a browser does when a user has filled in an HTML form and presses the submit button. This will cause curl to pass the data to the server using the content-type application/x-www-form-urlencoded.</p>
+<p><strong>b.1) Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>merchantID</td>
+<td>Text (15)</td>
+<td>Required</td>
+<td>Merchant's ID as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td>merchantRef</td>
+<td>Text (40)</td>
+<td>Required</td>
+<td>Merchant's Reference Number</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>Number (12, 2)</td>
+<td>Required</td>
+<td>Transaction amount.  Format: XXXXXXXXXX.XX</td>
+</tr>
+<tr>
+<td>expDate</td>
+<td>Number (14)</td>
+<td>Optional</td>
+<td>Transaction's expiration date/time.Format: yyyyMMddHHmmssIf not specified, blank or malformed, the expiry date is set to the value defined in the merchant settings which is 2880 minutes.</td>
+</tr>
+<tr>
+<td>successURL</td>
+<td>Text (300)</td>
+<td>Required</td>
+<td>The page to which 7-CONNECT redirects to after the user clicks on the Continue Browsing button.</td>
+</tr>
+<tr>
+<td>failURL</td>
+<td>Text (300)</td>
+<td>Required</td>
+<td>The page to which 7-CONNECT redirects to after a failed transaction.</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Text</td>
+<td>Required</td>
+<td>Transaction Security TokenTo create this, get the SHA-1 digest of:     merchantID + merchantRef + {transactionKey}PHP code:$token = sha1($merchantID . $merchantRef . '{' . $transactionKey . '}');transactionKey as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td>transactionDescription</td>
+<td>Text(3000)</td>
+<td>Optional</td>
+<td>Will be shown in the customer LCD screen and payment instruction page (max of 3000 characters)</td>
+</tr>
+<tr>
+<td>receiptRemarks</td>
+<td>Text(660)</td>
+<td>Optional</td>
+<td>Will be printed in the receipt (if none, defaults to {merchantID}</td>
+</tr>
+<tr>
+<td>789 E. Rodriguez St.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Call 777-7890 for questions</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Expected delivery date: 7/4/11</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>email</td>
+<td>Text</td>
+<td>Optional</td>
+<td>Used for notifications from 7-CONNECT to the customer. If not provided by the merchant, a button will appear in the instruction page to allow the customer to enter their email address.</td>
+</tr>
+<tr>
+<td>payLoad</td>
+<td>Text (3000)</td>
+<td>Optional for website only integrationRequired if service is available through CLiQQ</td>
+<td>This field can be set to other relevant transaction information that will be passed to the merchant's postback URL (e.g. Account Number, Customer Contact Number, etc.).This field is needed since the 7­Connect reference number may be generated by another device. That device will generate the payLoad contents and the payLoad contents will then be passed to the merchant's postback URL upon transaction payment.</td>
+</tr>
+<tr>
+<td>If merchant plans to integrate with CLiQQ</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td># 5</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>, this will be <strong>REQUIRED.</strong> This will contain details of the transaction provided by the customer.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>returnPaymentDetails</td>
+<td>Text (1)</td>
+<td>Optional</td>
+<td>Value can either be Y or N or blank.</td>
+</tr>
+<tr>
+<td>If the value is Y, the gateway will include the paymentDetails</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td># 6</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>when posting to the merchant postback URL when payment is made at the store.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>b.2) Sample code</strong></p>
+<p><a href="http://testpay.7-eleven.com.ph:8888/v1/reference/">http://testpay.7-eleven.com.ph:8888/v1/reference/</a></p>
+<p>INPUT: merchantID, merchantRef, amount, token and other optional fields in the document.</p>
+<p>-d "merchantID=ATI" \
+-d "merchantRef=6419705015" \
+-d "amount=100" \
+-d "token=235a23122139152ff830aa7fa1a876a95d4e365b" \
+-d "email= <a href="mailto:jpjamon@gmail.com">jpjamon@gmail.com</a>" \
+-d "expDate=20140730235959" \
+-d "receiptRemarks=ATI |^MerchRef: 6419705015" \
+-d "returnPaymentDetails=Return payment details here." \
+-d "transactionDescription=Transaction description here." \
+-d "payLoad=payLoad." \</p>
+<p>OUTPUT: payID, merchantID, merchantRef, amount, expiryDate, token, message</p>
+<p>curl \
+-d "merchantID=ATI" \
+-d "merchantRef=6419705015" \
+-d "amount=100" \
+-d "token=235a23122139152ff830aa7fa1a876a95d4e365b" \
+-d "email= <a href="mailto:jpjamon@gmail.com">jpjamon@gmail.com</a>" \
+-d "expDate=20140730235959" \
+-d "receiptRemarks=ATI |MerchRef: 6419705015" \
+-d "returnPaymentDetails=Return payment details here." \
+-d "transactionDescription=Transaction description here." \
+-d "payLoad=payLoad." \</p>
+<h2 id="iv-merchant-web-services">IV. Merchant Web Services</h2>
+<h3 id="a-handling-payments">A. Handling Payments</h3>
+<p>Merchants should prepare a Payment Handler to process payment postings that were paid at the store. Once payment was confirmed, merchant can now proceed to fulfill the customer's order such as redeem a voucher, receive an e-ticket or confirm a booking.</p>
+<p><img alt="diagram" src="./03-payment-flow.png" /></p>
+<p>7-CONNECT requires its merchants to have the following web services:</p>
+<blockquote>
+<p>VALIDATE (mandatory)</p>
+</blockquote>
+<p>This is used to verify the validity of a given Merchant Reference Number.</p>
+<blockquote>
+<p>CONFIRM (mandatory)</p>
+</blockquote>
+<p>This is used to confirm the payment for a given Merchant Reference Number.</p>
+<blockquote>
+<p>VOID (optional)</p>
+</blockquote>
+<p>This is used to void the payment made to a given Merchant Reference Number.</p>
+<p>Communication will be done using HTTP Post.</p>
+<p><strong>1. Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>Text</td>
+<td>Yes</td>
+<td>Valid values: VALIDATE, CONFIRM, VOID</td>
+</tr>
+<tr>
+<td>merchantRef</td>
+<td>Text (40)</td>
+<td>Yes</td>
+<td>Merchant's Reference Number</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>Number (12, 2)</td>
+<td>Yes</td>
+<td>Transaction AmountFormat: XXXXXXXXXX.XX</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Text</td>
+<td>Yes</td>
+<td>Transaction Security TokenTo create this, get the SHA-1 digest of: type +merchantID + merchantRef + {transactionKey}transactionKey as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td>payLoad</td>
+<td>Text (3000)</td>
+<td>Optional</td>
+<td>If no value was passed during the 7­Connect reference generation, then this parameter will not be passed to the postback URL.This field will contain the value of the payLoad request parameter when the 7­Connect reference number was generated.</td>
+</tr>
+<tr>
+<td>paymentDetails</td>
+<td>Text</td>
+<td>Optional</td>
+<td>Merchant will specify if they will require payment details. If 'N' or no value was passed to the parameter returnPaymentDetails during the 7­Connect reference generation, then this parameter will not be passed to the postback URL.This field is the JSON­formatted string containing payment details formatted this way:{"payID":"9913-0850-0305", "store":"0189", "pos":"1", "shift":"1", "bdate":"20130312000000"}</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2. Response Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>Text</td>
+<td>Yes</td>
+<td>Valid values: VALIDATE, CONFIRM, VOID</td>
+</tr>
+<tr>
+<td>merchantRef</td>
+<td>Text (40)</td>
+<td>Yes</td>
+<td>Merchant's Reference Number</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>Number (12, 2)</td>
+<td>Yes</td>
+<td>Transaction AmountFormat: XXXXXXXXXX.XX</td>
+</tr>
+<tr>
+<td>authCode</td>
+<td>Text (20)</td>
+<td>Yes, except for Validate</td>
+<td>Merchant-system-generated Authorization Code</td>
+</tr>
+<tr>
+<td>responseCode</td>
+<td>Text (12)</td>
+<td>Yes</td>
+<td>Valid values: SUCCESS, DECLINED</td>
+</tr>
+<tr>
+<td>responseDesc</td>
+<td>Text (40)</td>
+<td>No</td>
+<td>Details for the success or declined transaction.</td>
+</tr>
+<tr>
+<td>remarks</td>
+<td>Text (160)</td>
+<td>No</td>
+<td>Any remarks from the Merchant.  This will be printed on the receipt.</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Text</td>
+<td>Yes</td>
+<td>Transaction Security TokenTo create this, get the SHA-1 digest of: type + merchantID + merchantRef + authCode + responseCode + {transactionKey}transactionKey as provided by 7-CONNECT</td>
+</tr>
+</tbody>
+</table>
+<p>The format is :</p>
+<pre><code>?type=CONFIRM&amp;merchantID=merchantID\_value&amp;merchantRef=merchantRef\_value&amp;amount=amount\_value&amp;authCode=authCode\_value&amp;responseCode=responseCode\_value&amp;responseDesc=responseDesc\_value&amp;token=token\_value
+</code></pre>
+
+<p>Samples are :</p>
+<p>For DECLINED :</p>
+<pre><code>?type=CONFIRM&amp;merchantID=testmerchant&amp;merchantRef=&amp;amount=&amp;authCode=&amp;responseCode=DECLINED&amp;responseDesc=DONT LEAVE ANY FIELDS BLANK&amp;token=fe1047606531ebdbe00d1786c80c3ca7e54ce79a
+</code></pre>
+
+<p>For SUCCESS :</p>
+<pre><code>?type=CONFIRM&amp;merchantID=testmerchant&amp;merchantRef=testmerchant01&amp;amount=2500&amp;authCode=1040249589&amp;responseCode=SUCCESS&amp;responseDesc=SUCCESSFUL&amp;token=7a1b6c2212e92b2ba1a2ba2d7db4031a93086d0c
+</code></pre>
+
+<p><strong>3. Sample Code</strong></p>
+<p>The following php code implements the merchant service that will handle VALIDATE, CONFIRM and VOID instructions coming from the 7-CONNECT gateway.</p>
+<pre><code>&lt;?php
+
+/* This is the verification service that listens to payment transactions from the gateway. */
+
+if (isset($\_REQUEST['type'])) {
+ $transactiontype = $\_REQUEST['type'];
+ $merchantRef = $\_REQUEST['merchantRef'];
+ $amount = $\_REQUEST['amount'];
+ $token = $\_REQUEST['token'];
+
+ // Check if token is valid
+ // Replace merchantID with your merchant ID
+
+ $transactionKey = '7ede208b7f8a58573057e7dde57fe8f3969fe0b2c32149c36b8c29ae9f744274';
+ $merchantID = 'TestMerchant01';
+ $validtoken = sha1($transactiontype . $merchantID . $merchantRef . '{' . $transactionKey . '}');
+ if ($token != $validtoken) {
+  $authCode = &quot;&quot;;
+  $responseCode = &quot;DECLINED&quot;;
+  $responseDesc = &quot;Invalid token&quot;;
+ } else {
+  $authCode = '1111';
+  $responseCode = &quot;SUCCESS&quot;;
+  $responseDesc = &quot;&quot;;
+  switch($transactiontype) {
+   case &quot;VALIDATE&quot;:
+
+    // Check if merchantRef is still valid
+
+    break;
+   case &quot;CONFIRM&quot;:
+
+    // Update the paid status of the table
+
+    break;
+
+   case &quot;VOID&quot;:
+
+    // Update the paid status of the table
+
+    break;
+
+   default:
+
+    $responseCode = &quot;DECLINED&quot;;
+    $responseDesc = &quot;Unknown transaction type&quot;;
+  }
+ }
+
+ $token = sha1($transactiontype . $merchantID . $merchantRef . $authCode . $responseCode . '{' . $transactionKey . '}');
+
+ //set GET variables
+
+ $fields = array(
+    'merchantID'=&gt;$merchantID,
+    'merchantRef'=&gt;$merchantRef,
+    'amount'=&gt;$amount,
+    'authCode'=&gt;$authCode,
+    'responseCode'=&gt;$responseCode,
+    'responseDesc'=&gt;$responseDesc,
+    'token'=&gt;$token
+   );
+
+ $params = http\_build\_query($fields);
+
+ //output response
+
+ echo &quot;?$params&quot;;
+
+ //write logfile
+
+ $myFile = &quot;/tmp/7-CONNECT.log&quot;;
+ $fh = fopen($myFile, 'a') or exit();
+ fwrite($fh, date('Y-m-d H:i ') . $params . &quot;\n&quot;);
+ fclose($fh);
+}
+</code></pre>
+
+<h2 id="v-transaction-inquiry">V. Transaction Inquiry</h2>
+<p>A. Request Parameters</p>
+<p>Using HTTP Post or Get, the merchant site has to provide the 7-CONNECT Gateway with the parameters it requires for transaction inquiry.  These are:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>merchantID</td>
+<td>Text (15)</td>
+<td>Yes</td>
+<td>Merchant's ID as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td>merchantRef</td>
+<td>Text (40)</td>
+<td>Yes</td>
+<td>Merchant's Reference Number</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Text</td>
+<td>Yes</td>
+<td>Transaction Security TokenTo create this, get the SHA-1 digest of: merchantRef + {transactionKey}transactionKey as provided by 7-CONNECT</td>
+</tr>
+</tbody>
+</table>
+<p>B. Response Parameters</p>
+<p>7-CONNECT returns a JSON-formatted string. Example response:</p>
+<pre><code>{ &quot;merchantID&quot;: &quot;123&quot;, &quot;merchantRef&quot;: &quot;123&quot;, &quot;payID&quot;: &quot;123&quot;, &quot;status&quot;: &quot;UNPAID&quot;, &quot;token&quot;: &quot;123&quot; }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>merchantID</td>
+<td>Text (15)</td>
+<td>Yes</td>
+<td>Merchant's ID as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td>merchantRef</td>
+<td>Text (40)</td>
+<td>Yes</td>
+<td>Merchant's Reference Number. If the merchant reference number is not unique, the gateway will return the first match.</td>
+</tr>
+<tr>
+<td>payID</td>
+<td>Text (20)</td>
+<td>Yes</td>
+<td>7-CONNECT Reference generated by the gateway</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Text</td>
+<td>Yes</td>
+<td>Valid values: UNPAID, PAID, POSTED, EXPIRED, ERROR</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Text</td>
+<td>Yes</td>
+<td>Transaction Security TokenTo create this, get the SHA-1 digest of: merchantRef + payID + status + {transactionKey}transactionKey as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td>message</td>
+<td>Text</td>
+<td>No</td>
+<td>A description of the response</td>
+</tr>
+</tbody>
+</table>
+<h2 id="vi-appendix">VI. APPENDIX</h2>
+<h3 id="revision-history">Revision History</h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Revisions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1</td>
+<td>2011-03-02</td>
+<td>Initial document draft</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>2011-03-16</td>
+<td>Added test plan section</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>2011-03-18</td>
+<td>Added screenshots. Renamed 7-Pay ID to 7-Pay Reference.</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td>2011-03-24</td>
+<td>Added documentation on generating the token. Also added sample php code for getting the 7-Pay Reference.</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>2011-04-06</td>
+<td>Added 3 new optional fields (transactionDescription - will be shown in the customer LCD screen and payment instruction page, receiptRemarks that is printed in the receipt, and email for notifying customers of 7-Pay transactions.Also added sample code for merchant web service implementation.</td>
+</tr>
+<tr>
+<td>0.6</td>
+<td>2011-04-26</td>
+<td>Modified branding to 7-CONNECT.</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>2011-07-26</td>
+<td>Updated the instruction page screenshot to include the "Email instructions to …" button. (2.1)Changed receipt remarks maximum limit to 660 characters and added an example. (2.1.2)Corrected URL of test environment. (2.1.4)Added a merchant ID parameter to the transaction inquiry (2.2 and 2.2.3) and modified the return values directly in JSON format. The previous API has been deprecated.</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>2013-01-04</td>
+<td>Increased character limit of transactionDescription to 3,000 from 128 characters.</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>2013-10-07</td>
+<td>Added payLoad and returnPaymentDetails in the calling parameters.</td>
+</tr>
+<tr>
+<td>1.1</td>
+<td>2014-08-04</td>
+<td>Added REST style createReference service</td>
+</tr>
+<tr>
+<td>1.2</td>
+<td>2015-03-20</td>
+<td>Split introduction to "Overview" and "Getting Started"Added subtopic in creating payment referenceAdded required payload parameter for CLiQQ"Response Parameter" changed to "Parameters sent to SuccessURL or FailURL"Added description for Handling PaymentsURLs included in "Getting Started" TopicAdded CLiQQ Parameters in the Appendix C</td>
+</tr>
+</tbody>
+</table>
+<h3 id="parameters-sent-to-successurl-or-failurl">Parameters sent to SuccessURL or FailURL</h3>
+<p>These are the parameters that will be sent depending on whether the 7-CONNECT Request was successful or not.  The parameters are:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>merchantID</td>
+<td>Text (15)</td>
+<td>Yes</td>
+<td>Merchant's ID as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td>merchantRef</td>
+<td>Text (40)</td>
+<td>Yes</td>
+<td>Merchant's Reference Number</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>Number (12, 2)</td>
+<td>Yes</td>
+<td>Transaction amount.  Format: XXXXXXXXXX.XX</td>
+</tr>
+<tr>
+<td>payID</td>
+<td>Text (20)</td>
+<td>Yes</td>
+<td>7-CONNECT Reference generated by the gateway</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Text</td>
+<td>Yes</td>
+<td>Transaction Security TokenTo create this, get the SHA-1 digest of: merchantID + merchantRef + payID + {transactionKey}PHP code:$token = sha1($merchantID . $merchantRef . $payID . '{' . $transactionKey . '}');transactionKey as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td>message</td>
+<td>Text</td>
+<td>No</td>
+<td>Error message.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cliqq">CLiQQ</h3>
+<p>CLiQQ allows customers to make a transaction by just entering the needed information the merchant requires at the CLiQQ kiosk or CLiQQ mobile app. Once customer makes the transaction using CLiQQ kiosk, CLiQQ will dispense a payment slip containing a 7-Connect Reference number to be presented when paying at the counter.</p>
+<h4 id="process-flow">Process Flow</h4>
+<p><strong>Request Parameters</strong></p>
+<p>The merchant should expect the following variables which will be passed via HTTP POST (with the parameters in the request content, not in the URL. Please refer to the section IV-A on handling payments. The CLiQQ service mandates the use of payload and paymentDetails to return transaction information that is entered by the customer at the kiosk or mobile app. The following describes the data that is sent to the merchant upon payment at the counter.</p>
+<table>
+<thead>
+<tr>
+<th>Variable Name</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>Text</td>
+<td>CONFIRM</td>
+</tr>
+<tr>
+<td>merchantRef</td>
+<td>Text (40)</td>
+<td>(merchant to require us of the value)</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>Number (12,2)</td>
+<td>Transaction amount</td>
+</tr>
+<tr>
+<td>payLoad</td>
+<td>Text</td>
+<td>JSON-formatted string containing other relevant transaction information</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>LOAD</th>
+<th>Field NameEx. Mobile number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E-PIN</td>
+<td>Field NameEx. Mobile number</td>
+</tr>
+<tr>
+<td>BILLS PAYMENT</td>
+<td>First Field name, Second Field nameEx. Account Number, Subscriber's Name</td>
+</tr>
+</tbody>
+</table>
+<p>It will be formatted this way:</p>
+<p>Sample for load and e-pins:</p>
+<pre><code> {&quot;mobilenumber&quot;:&quot;09228792165&quot;}
+</code></pre>
+
+<p>Sample for bills payment:</p>
+<pre><code> {&quot;account&quot;: &quot;0708535737&quot;, &quot;subscriber&quot;: &quot;JDELACRUZ&quot;, }
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>token</td>
+<td>Text</td>
+<td>Transaction Security Token This value must match the <strong>SHA-1 digest</strong> of:  type +merchantID + merchantRef + {transactionKey} where</td>
+</tr>
+<tr>
+<td>- type - the value of the type variable</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- merchantID - provided by 7-Connect</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- merchantRef - the value of the merchantRef variable</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- transactionKey  - provided by 7-Connect</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Example:SHA-1 digest of: CONFIRMtestmerchanttestmerchant003{628e936f45884030ac1f34bcde9c28efa6ae9c839623b45b8942bd4490e1f05d} = f46c33a0e2f35cb2321a4054ec2750f38a8f7a25</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="response-variable">Response Variable</h4>
+<p>In order to allow 7-Connect to confirm that the merchant has acknowledged the payment notification, the payment handler service must contain the following variables:</p>
+<table>
+<thead>
+<tr>
+<th>Variable Name</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>Text</td>
+<td>CONFIRM</td>
+</tr>
+<tr>
+<td>merchantRef</td>
+<td>Text (40)</td>
+<td>(merchant to require the value)</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>Number (12,2)</td>
+<td>Transaction amount</td>
+</tr>
+<tr>
+<td>authCode</td>
+<td>Text (20)</td>
+<td>Merchant-system-generated Authorization Code</td>
+</tr>
+<tr>
+<td>responseCode</td>
+<td>Text (12)</td>
+<td>Valid values: SUCCESS, DECLINED</td>
+</tr>
+<tr>
+<td>responseDesc</td>
+<td>Text (40)</td>
+<td>Brief description for the response code</td>
+</tr>
+<tr>
+<td>remarks</td>
+<td>Text (160)</td>
+<td>Any remarks from the Merchant.  This will be printed on the receipt.</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Text</td>
+<td>Transaction Security Token This value must match the SHA-1 digest of:  type +merchantID + merchantRef + authCode + responseCode + {transactionKey} where</td>
+</tr>
+<tr>
+<td>- type - the value of the type variable</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- merchantID - provided by 7-Connect</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- merchantRef - the value of the merchantRef variable</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- authCode - the authCode generated by the merchant</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- responseCode - the responseCode generated by the merchant</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- transactionKey  - provided by 7-Connect</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Example: SHA-1 digest of: CONFIRM + Kiosk_BillsPayment +837143358+ B30F3454191E + SUCCESS + {197f13e7ce767852ea56d15d8b3af9decb5c642be2dc7e5d09d588ce5b0b3590} =  9a96ebd5c4ef2b1d9b82fde2bb4a2d70dbbc0717</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The payment listener should output response a simple text containing a question mark(?) along with the url encoded variables and its respected values:</p>
+<p>The format is :</p>
+<pre><code>?merchantID=merchantID\_value&amp;merchantRef=merchantRef\_value&amp;amount=amount\_value&amp;authCode=authCode\_value&amp;responseCode=responseCode\_value&amp;responseDesc=responseDesc\_value&amp;token=token\_value
+</code></pre>
+
+<p>Samples are :</p>
+<p>For DECLINED :</p>
+<pre><code>?merchantID=kioskload&amp;merchantRef=&amp;amount=&amp;authCode=&amp;responseCode=DECLINED&amp;responseDesc=DONT LEAVE ANY FIELDS BLANK&amp;token=fe1047606531ebdbe00d1786c80c3ca7e54ce79a
+</code></pre>
+
+<p>For SUCCESS :</p>
+<pre><code>?merchantID=kioskload&amp;merchantRef=topup01&amp;amount=2500&amp;authCode=1040249589&amp;responseCode=SUCCESS&amp;responseDesc=SUCCESSFUL&amp;token=7a1b6c2212e92b2ba1a2ba2d7db4031a93086d0c
+</code></pre>
+
+<blockquote>
+<p>1 See Appendix B for Response Parameters</p>
+<p>2 See Appendix C for further information regarding CLiQQ</p>
+<p>3 See IV.A.1 for reference</p>
+<p>4 See Appendix A for Response Parameters</p>
+<p>5 See Appendix C for details regarding CLiQQ</p>
+<p>6 Refer to IV.A.1 for more information</p>
+</blockquote></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="./js/jquery-1.10.2.min.js"></script>
+        <script src="./js/bootstrap-3.0.3.min.js"></script>
+        <script src="./js/highlight.pack.js"></script>
+        <script>var base_url = '.';</script>
+        <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
+        <script src="./js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 0.14.0
+Build Date UTC : 2015-07-27 15:42:36.656331
+-->
