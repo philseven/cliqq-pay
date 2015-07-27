@@ -13,8 +13,8 @@
 
         <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="./css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="./css/highlight.css">
+        <link href="./css/base.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -25,14 +25,20 @@
         
     </head>
 
-    <body class="homepage">
+    <body>
 
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
 
         <!-- Collapsed navigation -->
         <div class="navbar-header">
-            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
 
             <!-- Main title -->
             <a class="navbar-brand" href=".">7-CONNECT Merchant Integration Guide</a>
@@ -40,15 +46,29 @@
 
         <!-- Expanded navigation -->
         <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
             
+            
+                <li class="active">
+                    <a href=".">Home</a>
+                </li>
+            
+            
+            </ul>
 
+            <!-- Search, Navigation and Repo links -->
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                        <i class="fa fa-search"></i> Search
+                <li class="disabled">
+                    <a rel="next" >
+                        <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
-                
+                <li class="disabled">
+                    <a rel="prev" >
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
                 
             </ul>
         </div>
@@ -56,8 +76,7 @@
 </div>
 
         <div class="container">
-            
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#merchant-integration-guide">Merchant Integration Guide</a></li>
@@ -77,10 +96,11 @@
     
     </ul>
 </div></div>
-                <div class="col-md-9" role="main">
+            <div class="col-md-9" role="main">
 
 <h1 id="merchant-integration-guide">Merchant Integration Guide</h1>
 <p>7-CONNECT Merchant Integration Guide</p>
+<p><img alt="logo" src="./logo.png" /></p>
 <p>Copyright 2011, Philippine Seven Corporation and affiliates. All rights reserved.</p>
 <p>The information contained in this document is confidential and intended for merchants who will be integrating to the 7-CONNECT gateway. Copying and distribution of this document to unauthorized parties is prohibited.</p>
 <p>The information contained herein is subject to change without notice and is not warranted to be error-free. If you find any errors, please report them to us in writing.</p>
@@ -201,7 +221,7 @@
 <td>receiptRemarks</td>
 <td>Text(660)</td>
 <td>Optional</td>
-<td>Will be printed in the receipt (if none, defaults to {merchantID}</td>
+<td>Will be printed in the receipt (if none, defaults to {merchantID}&#124;{merchantRef}) (max of 660 characters). Use the &#124; characters to instruct a new line.  The width of the receipt is 32 characters. Excess characters in a line will be truncated in the receipt. Example: "John Santos&#124;789 E. Rodriguez St.&#124;Call 777-7890 for questions&#124;Expected delivery date: 7/4/11" This will be rendered on the receipt as:John Santos 789 E. Rodriguez St. Call 777-7890 for questions Expected delivery date: 7/4/11</td>
 </tr>
 <tr>
 <td>email</td>
@@ -1145,51 +1165,17 @@ if (isset($\_REQUEST['type'])) {
 <p>5 See Appendix C for details regarding CLiQQ</p>
 <p>6 Refer to IV.A.1 for more information</p>
 </blockquote></div>
-            
         </div>
 
         <footer class="col-md-12">
             <hr>
             
-            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+            <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
         </footer>
 
         <script src="./js/jquery-1.10.2.min.js"></script>
         <script src="./js/bootstrap-3.0.3.min.js"></script>
         <script src="./js/highlight.pack.js"></script>
-        <script>var base_url = '.';</script>
-        <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
         <script src="./js/base.js"></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            From here you can search these documents. Enter
-                            your search terms below.
-                        </p>
-                        <form role="form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
-                            </div>
-                        </form>
-                        <div id="mkdocs-search-results"></div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </body>
 </html>
-
-<!--
-MkDocs version : 0.14.0
-Build Date UTC : 2015-07-27 15:46:47.517122
--->
