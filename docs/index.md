@@ -1,8 +1,6 @@
-# Merchant Integration Guide
-
-7-CONNECT Merchant Integration Guide
-
 ![logo](img/logo.png)
+
+# 7-CONNECT Merchant Integration Guide
 
 Copyright 2011, Philippine Seven Corporation and affiliates. All rights reserved.
 
