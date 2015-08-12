@@ -131,32 +131,32 @@
 <li>For Testing - <a href="http://testpay.7-eleven.com.ph:8888/transact">http://testpay.7-eleven.com.ph:8888/transact</a></li>
 <li>For Live Production - <a href="https://pay.7-eleven.com.ph/transact">https://pay.7-eleven.com.ph/transact</a></li>
 </ul>
-<p>To get the latest information and graphic logos, please visit the site: http://7-connect.philseven.com</p>
+<p>To get the latest information and graphic logos, please visit the site: <a href="http://7-connect.philseven.com">http://7-connect.philseven.com</a></p>
 <h2 id="iii-7-connect-web-services">III. 7-Connect Web Services</h2>
 <h3 id="a-7-connect-reference">A. 7-Connect Reference</h3>
-<p>7-Connect Reference is a 12-digit number issued by the 7-Connect gateway. This reference number will be presented at the store transact customer's purchase under 7-Connect.</p>
+<p>7-Connect Reference is a 12-digit number issued by the 7-Connect gateway. This reference number will be presented at the store in order to transact customer's purchase under 7-Connect.</p>
 <h4 id="1-creating-a-payment-reference">1. Creating a payment reference</h4>
-<p><strong>a.) Via a redirect page –</strong> After customer checks out and choose 7-Connect as a payment option, merchant will send a request to generate a reference number. They will be then automatically redirected to the payment instruction page. This means that merchants don't have to create a payment instruction page.  This page contains the transaction details and the 7-Connect reference number issued for the transaction.</p>
+<h5 id="a-via-a-redirect-page-after-customer-checks-out-and-chooses-7-connect-as-a-payment-option-merchant-will-send-a-request-to-generate-a-reference-number-they-will-be-then-automatically-redirected-to-the-payment-instruction-page-this-means-that-merchants-dont-have-to-create-a-payment-instruction-page-the-payment-instruction-page-contains-the-transaction-details-and-the-7-connect-reference-number-issued-for-the-transaction"><strong>a.) Via a redirect page –</strong> After customer checks out and chooses 7-Connect as a payment option, merchant will send a request to generate a reference number. They will be then automatically redirected to the payment instruction page. This means that merchants don't have to create a payment instruction page.  The payment instruction page contains the transaction details and the 7-Connect reference number issued for the transaction.</h5>
+<p><br></p>
 <p><img alt="diagram" src="./img/01-diagram.png" /></p>
-<ol>
-<li>Customer selects <strong>7-CONNECT</strong> as Payment Mode in Checkout.</li>
-<li>Merchant Site sends a 7-CONNECT Reference Request to the 7-CONNECT Gateway.</li>
-<li>7-CONNECT Gateway displays the following instruction page displaying the Merchant details and the 7-CONNECT Reference.  At this point, the Customer can:</li>
+<blockquote>
+<p><ol>
+  <li> Customer selects <strong>7-CONNECT</strong> as Payment Mode in Checkout.</li>
+  <li> Merchant Site sends a 7-CONNECT Reference Request to the 7-CONNECT Gateway.</li>
+  <li> 7-CONNECT Gateway displays the following instruction page displaying the Merchant details and the 7-CONNECT Reference.  At this point, the Customer can:</li>
 </ol>
-<p><img alt="diagram" src="./02-instruction.png" /></p>
-<p>7-CONNECT Gateway displays the following instruction page displaying the Merchant details and the 7-CONNECT Reference.  At this point, the Customer can:</p>
-<ol>
-<li>Write down the 7-CONNECT Reference </li>
-<li>
-<p>Print the page</p>
-</li>
-<li>
-<p>Customer selects <strong>Continue Browsing</strong>.</p>
-</li>
-<li>7-CONNECT Gateway redirects to the Merchant's Success URL.</li>
-<li>Merchant Site displays the Order Confirmation page.</li>
-</ol>
-<p><strong>a.1) Request Parameters</strong></p>
+<br></p>
+</blockquote>
+<p><img alt="diagram" src="./img/02-instruction.png" /></p>
+<blockquote>
+<p>a. Write down the 7-CONNECT Reference<br> b. Print the page
+<ol start ="4">
+  <li> Customer selects <strong>Continue Browsing</strong>.</li>
+  <li> 7-CONNECT Gateway redirects to the Merchant's Success URL.</li>
+  <li> Merchant Site displays the Order Confirmation page.</li>
+ </ol></p>
+</blockquote>
+<h6 id="a1-request-parameters"><strong>a.1) Request Parameters</strong></h6>
 <p>Using HTTP Post or Get, the merchant site has to provide the 7-CONNECT Gateway with    the parameters it requires to generate a 7-CONNECT Reference.  You will be provided with your own Merchant ID and Transaction Key after completing the merchant agreement.</p>
 <table>
 <thead>
@@ -184,13 +184,13 @@
 <td>amount</td>
 <td>Number (12, 2)</td>
 <td>Required</td>
-<td>Transaction amount.  Format: XXXXXXXXXX.XX</td>
+<td>Transaction amount.<br><br>Format: XXXXXXXXXX.XX</td>
 </tr>
 <tr>
 <td>expDate</td>
 <td>Number (14)</td>
 <td>Optional</td>
-<td>Transaction's expiration date/time.Format: yyyyMMddHHmmssIf not specified, blank or malformed, the expiry date is set to the value defined in the merchant settings which is 2880 minutes.</td>
+<td>Transaction's expiration date/time.<br><br>Format: yyyyMMddHHmmss<br><br>If not specified, blank or malformed, the expiry date is set to the value defined in the merchant settings which is 2880 minutes.</td>
 </tr>
 <tr>
 <td>successURL</td>
@@ -208,7 +208,7 @@
 <td>token</td>
 <td>Text</td>
 <td>Required</td>
-<td>Transaction Security TokenTo create this, get the SHA-1 digest of:     merchantID + merchantRef + {transactionKey}PHP code:$token = sha1($merchantID . $merchantRef . '{' . $transactionKey . '}'); transactionKey as provided by 7-CONNECT</td>
+<td>Transaction Security Token<br><br>To create this, get the SHA-1 digest of:<br><em>merchantID + merchantRef + {transactionKey}</em><br><br>PHP code:<br><code>*$token = sha1($merchantID . $merchantRef . '{' . $transactionKey . '}');<br><br></code>transactionKey as provided by 7-CONNECT</td>
 </tr>
 <tr>
 <td>transactionDescription</td>
@@ -220,7 +220,7 @@
 <td>receiptRemarks</td>
 <td>Text(660)</td>
 <td>Optional</td>
-<td>Will be printed in the receipt (if none, defaults to {merchantID}&#124;{merchantRef}) (max of 660 characters). Use the &#124; characters to instruct a new line.  The width of the receipt is 32 characters. Excess characters in a line will be truncated in the receipt. Example: "John Santos&#124;789 E. Rodriguez St.&#124;Call 777-7890 for questions&#124;Expected delivery date: 7/4/11" This will be rendered on the receipt as:John Santos 789 E. Rodriguez St. Call 777-7890 for questions Expected delivery date: 7/4/11</td>
+<td>Will be printed in the receipt (if none, defaults to {merchantID}&#124;{merchantRef}) (max of 660 characters). Use the &#124; characters to instruct a new line.  The width of the receipt is 32 characters. Excess characters in a line will be truncated in the receipt. <br><br>Example:<br><br> "John Santos&#124;789 E. Rodriguez St.&#124;Call 777-7890 for questions&#124;Expected delivery date: 7/4/11" <br><br>This will be rendered on the receipt as:<br><br> John Santos 789 <br>E. Rodriguez St.<br>Call 777-7890 for questions<br> Expected delivery date: 7/4/11</td>
 </tr>
 <tr>
 <td>email</td>
@@ -231,14 +231,8 @@
 <tr>
 <td>payLoad</td>
 <td>Text (3000)</td>
-<td>Optional for website only integration. Required if service is available through CLiQQ</td>
-<td>This field can be set to other relevant transaction information that will be passed to the merchant's postback URL (e.g. Account Number, Customer Contact Number, etc.).This field is needed since the 7­Connect reference number may be generated by another device. That device will generate the payLoad contents and the payLoad contents will then be passed to the merchant's postback URL upon transaction payment. If merchant plans to integrate with CLiQQ, this will be <strong>REQUIRED.</strong> This will contain details of the transaction provided by the customer.</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Optional for website only integration. <strong>Required if service is available through CLiQQ</strong></td>
+<td>This field can be set to other relevant transaction information that will be passed to the merchant's postback URL (e.g. Account Number, Customer Contact Number, etc.).<br><br>This field is needed since the 7­Connect reference number may be generated by another device. That device will generate the payLoad contents and the payLoad contents will then be passed to the merchant's postback URL upon transaction payment. <br><br>If merchant plans to integrate with CLiQQ, this will be <strong>REQUIRED.</strong> This will contain details of the transaction provided by the customer.</td>
 </tr>
 <tr>
 <td>returnPaymentDetails</td>
@@ -254,7 +248,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>a.2) Sample Code</strong></p>
+<h6 id="a2-sample-code"><strong>a.2) Sample Code</strong></h6>
 <p>This php code will display a form asking for a merchant reference and amount. Submitting this will display the payment instruction page containing the 7-CONNECT Reference.</p>
 <p>transact.php</p>
 <pre><code>&lt;?php
@@ -262,10 +256,10 @@
 if (isset($\_REQUEST['submit'])) {
  $merchantRef = $\_REQUEST['merchantRef'];
  $amount = $\_REQUEST['amount'];
+
  if (!is\_numeric($amount)) {
   $errormsg = &quot;Invalid amount.&quot;;
  }
-
  $transactURL = 'http://testpay.7-eleven.com.ph:8888/transact';
  $inquireURL = 'http:// testpay.7-eleven.com.ph:8888/inquire';
  $transactionKey = '628e936f45884030ac1f34bcde9c28efa6ae9c839623b45b8942bd4490e1f05d';
@@ -275,70 +269,46 @@ if (isset($\_REQUEST['submit'])) {
  $token = sha1($merchantID . $merchantRef . '{' . $transactionKey . '}');
 
  //set variables
-
  $fields = array(
 
     'merchantID'=&gt;$merchantID,
-
     'merchantRef'=&gt;$merchantRef,
-
     'amount'=&gt;$amount,
-
     'successURL'=&gt;$successURL,
-
     'failURL'=&gt;$failURL,
-
     'token'=&gt;$token
-
    );
 
  $params = http\_build\_query($fields);
-
  header(&quot;Location: $transactURL?$params&quot;);
-
 }
 
 if (isset($error)) {
-
  echo &quot;Invalid Amount. Please enter again.&quot;;
-
 }
-
 ?&gt;
 
 &lt;h1&gt;7-CONNECT Test Request&lt;/h1&gt;
-
 &lt;form method=&quot;post&quot;&gt;
-
 &lt;table&gt;
-
 &lt;tr&gt;
-
 &lt;td&gt;Merchant Reference:&lt;/td&gt;
-
 &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;merchantRef&quot;&gt;&lt;/td&gt;
-
 &lt;/tr&gt;
-
 &lt;tr&gt;
-
 &lt;td&gt;Amount:&lt;/td&gt;
-
 &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;amount&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
-
 &lt;tr&gt;
-
 &lt;td&gt;&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Submit to 7-CONNECT&quot;&gt;&lt;/td&gt;
-
 &lt;/tr&gt;
-
 &lt;/table&gt;
-
 &lt;/form&gt;
 </code></pre>
 
-<p><strong>b). Creation of payment reference over a web service –</strong> This allows more control on how payment instruction should be delivered to customers. Merchant will be the one responsible to display the payment instructions with the 7-Connect Reference Number. This is a web service that receives an HTTP POST request and returns a JSON response. Sends the specified data in a POST request to  the  HTTP server,  in  the  same  way  that a browser does when a user has filled in an HTML form and presses the submit button. This will cause curl to pass the data to the server using the content-type application/x-www-form-urlencoded.</p>
-<p><strong>b.1) Request Parameters</strong></p>
+<p><br></p>
+<h5 id="b-creation-of-payment-reference-over-a-web-service-this-allows-more-control-on-how-payment-instruction-should-be-delivered-to-customers-merchant-will-be-the-one-responsible-to-display-the-payment-instructions-with-the-7-connect-reference-number-this-is-a-web-service-that-receives-an-http-post-request-and-returns-a-json-response-sends-the-specified-data-in-a-post-request-to-the-http-server-in-the-same-way-that-a-browser-does-when-a-user-has-filled-in-an-html-form-and-presses-the-submit-button-this-will-cause-curl-to-pass-the-data-to-the-server-using-the-content-type-applicationx-www-form-urlencoded"><strong>b). Creation of payment reference over a web service –</strong> This allows more control on how payment instruction should be delivered to customers. Merchant will be the one responsible to display the payment instructions with the 7-Connect Reference Number. This is a web service that receives an HTTP POST request and returns a JSON response. Sends the specified data in a POST request to  the  HTTP server,  in  the  same  way  that a browser does when a user has filled in an HTML form and presses the submit button. This will cause curl to pass the data to the server using the content-type application/x-www-form-urlencoded.</h5>
+<p><br></p>
+<h6 id="b1-request-parameters"><strong>b.1) Request Parameters</strong></h6>
 <table>
 <thead>
 <tr>
@@ -365,13 +335,13 @@ if (isset($error)) {
 <td>amount</td>
 <td>Number (12, 2)</td>
 <td>Required</td>
-<td>Transaction amount.  Format: XXXXXXXXXX.XX</td>
+<td>Transaction amount.<br><br>Format: XXXXXXXXXX.XX</td>
 </tr>
 <tr>
 <td>expDate</td>
 <td>Number (14)</td>
 <td>Optional</td>
-<td>Transaction's expiration date/time.Format: yyyyMMddHHmmssIf not specified, blank or malformed, the expiry date is set to the value defined in the merchant settings which is 2880 minutes.</td>
+<td>Transaction's expiration date/time.<br><br>Format: yyyyMMddHHmmss<br><br>If not specified, blank or malformed, the expiry date is set to the value defined in the merchant settings which is 2880 minutes.</td>
 </tr>
 <tr>
 <td>successURL</td>
@@ -389,7 +359,7 @@ if (isset($error)) {
 <td>token</td>
 <td>Text</td>
 <td>Required</td>
-<td>Transaction Security TokenTo create this, get the SHA-1 digest of:     merchantID + merchantRef + {transactionKey}PHP code:$token = sha1($merchantID . $merchantRef . '{' . $transactionKey . '}');transactionKey as provided by 7-CONNECT</td>
+<td>Transaction Security Token<br><br>To create this, get the SHA-1 digest of:<br><em>merchantID + merchantRef + {transactionKey}</em><br><br>PHP code:<br><code>$token = sha1($merchantID . $merchantRef . '{' . $transactionKey . '}');</code><br><br>transactionKey as provided by 7-CONNECT</td>
 </tr>
 <tr>
 <td>transactionDescription</td>
@@ -401,7 +371,7 @@ if (isset($error)) {
 <td>receiptRemarks</td>
 <td>Text(660)</td>
 <td>Optional</td>
-<td>Will be printed in the receipt (if none, defaults to <code>{merchantID}&#124;{merchantRef}</code>) (max of 660 characters). Use the pipe character to instruct a new line.  The width of the receipt is 32 characters. Excess characters in a line will be truncated in the receipt. Example: <code>"John Santos&#124;789 E. Rodriguez St.&#124;Call 777-7890 for questions&#124;Expected delivery date: 7/4/11"This will be rendered on the receipt as:John Santos789 E. Rodriguez St.Call 777-7890 for questionsExpected delivery date: 7/4/11</code></td>
+<td>Will be printed in the receipt (if none, defaults to {merchantID}&#124;{merchantRef} (max of 660 characters). Use the pipe character to instruct a new line.  The width of the receipt is 32 characters. Excess characters in a line will be truncated in the receipt. <br><br>Example:<br><br> "John Santos&#124;789 E. Rodriguez St.&#124;Call 777-7890 for questions&#124;Expected delivery date: 7/4/11" <br><br>This will be rendered on the receipt as:<br><br> John Santos<br> 789 E. Rodriguez St.<br> Call 777-7890 for questions<br> Expected delivery date: 7/4/11</td>
 </tr>
 <tr>
 <td>email</td>
@@ -412,56 +382,14 @@ if (isset($error)) {
 <tr>
 <td>payLoad</td>
 <td>Text (3000)</td>
-<td>Optional for website only integrationRequired if service is available through CLiQQ</td>
-<td>This field can be set to other relevant transaction information that will be passed to the merchant's postback URL (e.g. Account Number, Customer Contact Number, etc.).This field is needed since the 7­Connect reference number may be generated by another device. That device will generate the payLoad contents and the payLoad contents will then be passed to the merchant's postback URL upon transaction payment.</td>
-</tr>
-<tr>
-<td>If merchant plans to integrate with CLiQQ</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td># 5</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>, this will be <strong>REQUIRED.</strong> This will contain details of the transaction provided by the customer.</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Optional for website only integration. <strong>Required if service is available through CLiQQ</strong></td>
+<td>This field can be set to other relevant transaction information that will be passed to the merchant's postback URL (e.g. Account Number, Customer Contact Number, etc.).<br><br>This field is needed since the 7­Connect reference number may be generated by another device. That device will generate the payLoad contents and the payLoad contents will then be passed to the merchant's postback URL upon transaction payment.<br><br>If merchant plans to integrate with CLiQQ, this will be <strong>REQUIRED.</strong> This will contain details of the transaction provided by the customer.</td>
 </tr>
 <tr>
 <td>returnPaymentDetails</td>
 <td>Text (1)</td>
 <td>Optional</td>
-<td>Value can either be Y or N or blank.</td>
-</tr>
-<tr>
-<td>If the value is Y, the gateway will include the paymentDetails</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td># 6</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>when posting to the merchant postback URL when payment is made at the store.</td>
-<td></td>
-<td></td>
-<td></td>
+<td>Value can either be Y or N or blank. If the value is Y, the gateway will include the paymentDetails when posting to the merchant postback URL when payment is made at the store.</td>
 </tr>
 <tr>
 <td></td>
@@ -471,7 +399,62 @@ if (isset($error)) {
 </tr>
 </tbody>
 </table>
-<p><strong>b.2) Sample code</strong></p>
+<h6 id="b2-response-parameters"><strong>b.2) Response Parameters</strong></h6>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Data Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>merchantID</td>
+<td>Text (15)</td>
+<td>Yes</td>
+<td>Merchant's ID as provided by 7-Connect</td>
+</tr>
+<tr>
+<td>merchantRef</td>
+<td>Text (40)</td>
+<td>Yes</td>
+<td>Merchant's Reference Number</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>Number (12,2)</td>
+<td>Yes</td>
+<td>Transaction amount.<br><br>Format: XXXXXXXXXX.XX</td>
+</tr>
+<tr>
+<td>payID</td>
+<td>Text (20)</td>
+<td>Yes</td>
+<td>7-CONNECT Reference generated by the gateway</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Text</td>
+<td>Yes</td>
+<td>Transaction Security Token<br><br>To create this, get the SHA-1 digest of:<br><em>merchantID+merchantRef+payID+{transactionKey}</em><br><br>PHP code:<br><code>$token = sha1($merchantID) . $merchantRef . $payID . '{'.$transactionKey . '}');</code><br><br>transactionKey as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td>message</td>
+<td>Text</td>
+<td>No</td>
+<td>Error Message</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h6 id="b3-sample-code"><strong>b.3) Sample code</strong></h6>
 <p><a href="http://testpay.7-eleven.com.ph:8888/v1/reference/">http://testpay.7-eleven.com.ph:8888/v1/reference/</a></p>
 <p>INPUT: merchantID, merchantRef, amount, token and other optional fields in the document.</p>
 <pre><code>-d &quot;merchantID=ATI&quot; \
@@ -512,13 +495,13 @@ if (isset($error)) {
 <blockquote>
 <p>CONFIRM (mandatory)</p>
 </blockquote>
-<p>This is used to confirm the payment for a given Merchant Reference Number.</p>
-<blockquote>
-<p>VOID (optional)</p>
-</blockquote>
-<p>This is used to void the payment made to a given Merchant Reference Number.</p>
-<p>Communication will be done using HTTP Post.</p>
-<p><strong>1. Request Parameters</strong></p>
+<p>This is used to void the payment made to a given Merchant Reference Number.
+<br>
+<br>
+Communication will be done using <strong>HTTP Post</strong>.
+<br>
+<br></p>
+<h4 id="1-request-parameters"><strong>1. Request Parameters</strong></h4>
 <table>
 <thead>
 <tr>
@@ -533,7 +516,7 @@ if (isset($error)) {
 <td>type</td>
 <td>Text</td>
 <td>Yes</td>
-<td>Valid values: VALIDATE, CONFIRM, VOID</td>
+<td>Valid values: VALIDATE, CONFIRM</td>
 </tr>
 <tr>
 <td>merchantRef</td>
@@ -545,29 +528,35 @@ if (isset($error)) {
 <td>amount</td>
 <td>Number (12, 2)</td>
 <td>Yes</td>
-<td>Transaction AmountFormat: XXXXXXXXXX.XX</td>
+<td>Transaction Amount<br><br>Format: XXXXXXXXXX.XX</td>
 </tr>
 <tr>
 <td>token</td>
 <td>Text</td>
 <td>Yes</td>
-<td>Transaction Security TokenTo create this, get the SHA-1 digest of: type +merchantID + merchantRef + {transactionKey}transactionKey as provided by 7-CONNECT</td>
+<td>Transaction Security Token<br><br>To create this, get the SHA-1 digest of:<br><br><em>type +merchantID + merchantRef + {transactionKey}</em><br><br>transactionKey as provided by 7-CONNECT</td>
 </tr>
 <tr>
 <td>payLoad</td>
 <td>Text (3000)</td>
 <td>Optional</td>
-<td>If no value was passed during the 7­Connect reference generation, then this parameter will not be passed to the postback URL.This field will contain the value of the payLoad request parameter when the 7­Connect reference number was generated.</td>
+<td>If no value was passed during the 7­Connect reference generation, then this parameter will not be passed to the postback URL.<br><br>This field will contain the value of the payLoad request parameter when the 7­Connect reference number was generated.</td>
 </tr>
 <tr>
 <td>paymentDetails</td>
 <td>Text</td>
 <td>Optional</td>
-<td>Merchant will specify if they will require payment details. If 'N' or no value was passed to the parameter returnPaymentDetails during the 7­Connect reference generation, then this parameter will not be passed to the postback URL.This field is the JSON­formatted string containing payment details formatted this way:{"payID":"9913-0850-0305", "store":"0189", "pos":"1", "shift":"1", "bdate":"20130312000000"}</td>
+<td>Merchant will specify if they will require payment details. If 'N' or no value was passed to the parameter returnPaymentDetails during the 7­Connect reference generation, then this parameter will not be passed to the postback URL.<br><br>This field is the JSON­formatted string containing payment details formatted this way:<br><code>{"payID":"9913-0850-0305", "store":"0189", "pos":"1", "shift":"1", "bdate":"20130312000000"}</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<p><strong>2. Response Parameters</strong></p>
+<h4 id="2-response-parameters"><strong>2. Response Parameters</strong></h4>
 <table>
 <thead>
 <tr>
@@ -582,7 +571,7 @@ if (isset($error)) {
 <td>type</td>
 <td>Text</td>
 <td>Yes</td>
-<td>Valid values: VALIDATE, CONFIRM, VOID</td>
+<td>Valid values: VALIDATE, CONFIRM</td>
 </tr>
 <tr>
 <td>merchantRef</td>
@@ -594,7 +583,7 @@ if (isset($error)) {
 <td>amount</td>
 <td>Number (12, 2)</td>
 <td>Yes</td>
-<td>Transaction AmountFormat: XXXXXXXXXX.XX</td>
+<td>Transaction Amount<br><br>Format: XXXXXXXXXX.XX</td>
 </tr>
 <tr>
 <td>authCode</td>
@@ -624,7 +613,13 @@ if (isset($error)) {
 <td>token</td>
 <td>Text</td>
 <td>Yes</td>
-<td>Transaction Security TokenTo create this, get the SHA-1 digest of: type + merchantID + merchantRef + authCode + responseCode + {transactionKey}transactionKey as provided by 7-CONNECT</td>
+<td>Transaction Security Token<br><br>To create this, get the SHA-1 digest of:<br><em>type + merchantID + merchantRef + authCode + responseCode + {transactionKey}</em><br><br>transactionKey as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -642,7 +637,7 @@ if (isset($error)) {
 </code></pre>
 
 <p><strong>3. Sample Code</strong></p>
-<p>The following php code implements the merchant service that will handle VALIDATE, CONFIRM and VOID instructions coming from the 7-CONNECT gateway.</p>
+<p>The following php code implements the merchant service that will handle VALIDATE and CONFIRM instructions coming from the 7-CONNECT gateway.</p>
 <pre><code>&lt;?php
 
 /* This is the verification service that listens to payment transactions from the gateway. */
@@ -655,11 +650,11 @@ if (isset($\_REQUEST['type'])) {
 
  // Check if token is valid
  // Replace merchantID with your merchant ID
-
  $transactionKey = '7ede208b7f8a58573057e7dde57fe8f3969fe0b2c32149c36b8c29ae9f744274';
  $merchantID = 'TestMerchant01';
  $validtoken = sha1($transactiontype . $merchantID . $merchantRef . '{' . $transactionKey . '}');
- if ($token != $validtoken) {
+
+  if ($token != $validtoken) {
   $authCode = &quot;&quot;;
   $responseCode = &quot;DECLINED&quot;;
   $responseDesc = &quot;Invalid token&quot;;
@@ -669,24 +664,12 @@ if (isset($\_REQUEST['type'])) {
   $responseDesc = &quot;&quot;;
   switch($transactiontype) {
    case &quot;VALIDATE&quot;:
-
     // Check if merchantRef is still valid
-
     break;
    case &quot;CONFIRM&quot;:
-
     // Update the paid status of the table
-
     break;
-
-   case &quot;VOID&quot;:
-
-    // Update the paid status of the table
-
-    break;
-
    default:
-
     $responseCode = &quot;DECLINED&quot;;
     $responseDesc = &quot;Unknown transaction type&quot;;
   }
@@ -695,7 +678,6 @@ if (isset($\_REQUEST['type'])) {
  $token = sha1($transactiontype . $merchantID . $merchantRef . $authCode . $responseCode . '{' . $transactionKey . '}');
 
  //set GET variables
-
  $fields = array(
     'merchantID'=&gt;$merchantID,
     'merchantRef'=&gt;$merchantRef,
@@ -707,13 +689,10 @@ if (isset($\_REQUEST['type'])) {
    );
 
  $params = http\_build\_query($fields);
-
  //output response
-
  echo &quot;?$params&quot;;
 
  //write logfile
-
  $myFile = &quot;/tmp/7-CONNECT.log&quot;;
  $fh = fopen($myFile, 'a') or exit();
  fwrite($fh, date('Y-m-d H:i ') . $params . &quot;\n&quot;);
@@ -722,7 +701,7 @@ if (isset($\_REQUEST['type'])) {
 </code></pre>
 
 <h2 id="v-transaction-inquiry">V. Transaction Inquiry</h2>
-<p>A. Request Parameters</p>
+<h3 id="a-request-parameters">A. Request Parameters</h3>
 <p>Using HTTP Post or Get, the merchant site has to provide the 7-CONNECT Gateway with the parameters it requires for transaction inquiry.  These are:</p>
 <table>
 <thead>
@@ -750,11 +729,17 @@ if (isset($\_REQUEST['type'])) {
 <td>token</td>
 <td>Text</td>
 <td>Yes</td>
-<td>Transaction Security TokenTo create this, get the SHA-1 digest of: merchantRef + {transactionKey}transactionKey as provided by 7-CONNECT</td>
+<td>Transaction Security Token<br><br>To create this, get the SHA-1 digest of:<br><em>merchantRef + {transactionKey}</em><br><br>transactionKey as provided by 7-CONNECT</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<p>B. Response Parameters</p>
+<h3 id="b-response-parameters">B. Response Parameters</h3>
 <p>7-CONNECT returns a JSON-formatted string. Example response:</p>
 <pre><code>{ &quot;merchantID&quot;: &quot;123&quot;, &quot;merchantRef&quot;: &quot;123&quot;, &quot;payID&quot;: &quot;123&quot;, &quot;status&quot;: &quot;UNPAID&quot;, &quot;token&quot;: &quot;123&quot; }
 </code></pre>
@@ -797,13 +782,19 @@ if (isset($\_REQUEST['type'])) {
 <td>token</td>
 <td>Text</td>
 <td>Yes</td>
-<td>Transaction Security TokenTo create this, get the SHA-1 digest of: merchantRef + payID + status + {transactionKey}transactionKey as provided by 7-CONNECT</td>
+<td>Transaction Security Token<br><br>To create this, get the SHA-1 digest of:<br><em>merchantRef + payID + status + {transactionKey}</em><br><br>transactionKey as provided by 7-CONNECT</td>
 </tr>
 <tr>
 <td>message</td>
 <td>Text</td>
 <td>No</td>
 <td>A description of the response</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
