@@ -403,7 +403,7 @@ Using HTTP Post or Get, the merchant site has to provide the 7-CONNECT Gateway w
 | 0.8 | 2013-01-04 | Increased character limit of transactionDescription to 3,000 from 128 characters. |
 | 0.9 | 2013-10-07 | Added payLoad and returnPaymentDetails in the calling parameters. |
 | 1.1 | 2014-08-04 | Added REST style createReference service |
-| 1.2 | 2015-03-20 | Split introduction to "Overview" and "Getting Started"<br><br>Added subtopic in creating payment reference<br><br>Added required payload parameter for CLiQQ<br><br>"Response Parameter" changed to "Parameters sent to SuccessURL or FailURL"<br><br>Added description for Handling Payments<br><br>URLs included in "Getting Started" Topic<br><br>Added CLiQQ Parameters in the Appendix C |
+| 1.2 | 2015-03-20 | Split introduction to "Overview" and "Getting Started"<br><br>Added subtopic in creating payment reference<br><br>Added required payload parameter for CLiQQ<br><br>"Response Parameter" changed to "Parameters sent to SuccessURL or FailURL"<br><br>Added description for Handling Payments<br><br>URLs included in "Getting Started" Topic<br><br>Added CLiQQ Parameters |
 
 ### Parameters sent to SuccessURL or FailURL
 
