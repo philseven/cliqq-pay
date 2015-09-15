@@ -263,11 +263,11 @@ Communication will be done using **HTTP Post**.
 | type | Text | Yes | Valid values: VALIDATE, CONFIRM |
 | merchantRef | Text (40) | Yes | Merchant's Reference Number |
 | amount | Number (12, 2) | Yes | Transaction Amount<br><br>Format: XXXXXXXXXX.XX |
-| authCode | Text (20) | Yes, except for Validate | Merchant-system-generated Authorization Code |
+| authCode | Text (20) | Yes for Confirm<br><br>No for Validate | Merchant-system-generated Authorization Code |
 | responseCode | Text (12) | Yes | Valid values: SUCCESS, DECLINED |
 | responseDesc | Text (40) | No | Details for the success or declined transaction. |
 | remarks | Text (160) | No | Any remarks from the Merchant.  This will be printed on the receipt. |
-| token | Text | Yes | Transaction Security Token<br><br>To create this, get the SHA-1 digest of:<br>*type + merchantID + merchantRef + authCode + responseCode + {transactionKey}*<br><br>transactionKey as provided by 7-CONNECT |
+| token | Text | Yes | Transaction Security Token<br><br>To create this for **VALIDATE** call, get the SHA-1 digest of:<br>*type + merchantID + merchantRef + responseCode + {transactionKey}*<br><br>To create this for **CONFIRM** call, get the SHA-1 digest of:<br>*type + merchantID + merchantRef + authCode + responseCode + {transactionKey}*<br><br>transactionKey as provided by 7-CONNECT |
 | | | | |
 
 The format is :
