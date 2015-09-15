@@ -38,7 +38,7 @@ Integrating your website to 7-CONNECT will require development of two points:
 
 These URLs will be used:
 
-  - For Testing - [http://testpay.7-eleven.com.ph:8888/transact](http://testpay.7-eleven.com.ph:8888/transact)
+  - For Testing - [https://testpay.cliqq.net/transact](https://testpay.cliqq.net/transact)
   - For Live Production - [https://pay.7-eleven.com.ph/transact](https://pay.7-eleven.com.ph/transact)
 
 To get the latest information and graphic logos, please visit the site: [http://7-connect.philseven.com](http://7-connect.philseven.com)
