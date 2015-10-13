@@ -234,11 +234,11 @@ Merchants should prepare a Payment Handler to process payment postings that were
 
 > VALIDATE (mandatory)
 
-This is used to verify the validity of a given Merchant Reference Number.
+This is used to verify the validity of a given Merchant Reference Number. Validate function can also be used for amount checking, account number validity, expiration checking, inventory availability and uptime inquiry.
 
 > CONFIRM (mandatory)
 
-This is used to void the payment made to a given Merchant Reference Number.
+This is used to confirm the payment for a given Merchant Reference Number. Once a confirm request was processed by the merchant, it should reject the other confirm request sent with the same sevenConnectId.
 <br>
 <br>
 Communication will be done using **HTTP Post**.
@@ -470,3 +470,33 @@ For SUCCESS :
 ```
 ?merchantID=kioskload&merchantRef=topup01&amount=2500&authCode=1040249589&responseCode=SUCCESS&responseDesc=SUCCESSFUL&token=7a1b6c2212e92b2ba1a2ba2d7db4031a93086d0c
 ```
+
+### Test Plan
+
+#### Objective
+
+To test the ability of the 7-CONNECT Gateway to generate a 7-Connect Reference and then post the transaction to the Merchant Server
+
+Activities:
+
+| In-Charge | Activity | Expected Output |
+| ----- | ----- |
+| 7-Eleven | Provide merchant with account in the 7-Connect Test Environment<br><br>Test Environment URL: [https://testpay.cliqq.net](https://testpay.cliqq.net) | Merchant can log-in and see their transaction key for the test environment |
+| Merchant | Provide 7 - Eleven with postback URL for test environment<br><br>Create transactions using 7-Connect as the payment option | 7-Connect generates a 7-CONNECT reference number per purchase |
+| 7-Eleven | Configure 7-Connect to accomodate test postback URL<br><br>Simulate payments for created transactions | 7-Connect should not timed-out when communicating with the merchant<br><br>Merchant should receive payment confirmation from 7-Connect Gateway |
+| 7-Eleven | Provide merchant with account in the 7-Connect Production Environment<br><br>Production Environment URL: [https://pay.7-eleven.com.ph] (https://pay.7-eleven.com.ph) | Merchant can log-in and see their transaction key for the production environment |
+| Merchant | Provide 7-Eleven with postback URL for the production environment<br><br>Configure code with accordance to production transaction key | Merchant to be able to create a postback URL |
+| 7-Eleven | Configure 7-Connect to accomodate production postback URL | Merchant should receive payment confirmation from 7-Connect gateway when a transaction is paid |
+
+### Transaction Status
+
+| Status | Description |
+| ----- | ----- |
+| PENDING | A transaction waiting to be paid |
+| EXPIRED | Customer was not able to use the 7-Connect Reference Number during time that 7-Connect Reference Number is still valid. When attempting to pay for an expired transaction, the POS will declinethe reference number and it cannot be paid. The amount of days can be modified by 7-Eleven when requested by the merchant. Default expiration of 7-Connect Reference is 2 days. |
+| POSTED | A successfully paid transaction. This status indicates a successful posting of payment to the merchant site. |
+| STIP | When a transaction is paid, it is inserted in a queue called STIP. Every 10 minutes 7-Connect will attempt to communicate to the merchant site for a payment posting. If successful, the transaction status will become POSTED. If after 10 tries and no successful posting occurs then the transaction will remain STIP. A transaction with an STIP status can be POSTED in 2 ways. First, by manually sending a post request to the merchant site ( this is done by a 7-Eleven admin). Second, it can be manually changed in the 7-Connect database, this method does not post to the merchant so no payment confirmation will occur. |
+| DECLINED | Transaction has been declined by the merchant. This will likely happen if the merchant accepts the transaction during validation but declined it during the confirm call. |
+
+
+
