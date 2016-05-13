@@ -31,7 +31,7 @@ This guide assumes you have a working knowledge of the following:
 - HTTP and webservice concepts
 - SHA-1 hashing
 
-Integrating your website to 7-CONNECT will require development of two points:
+Integrating to 7-CONNECT will require development of two points:
 
 - 7-CONNECT Reference Request: You will need to request for a 7-CONNECT Reference which will be used by customers to pay at the store.
 - Merchant Payment API: This URL will enable 7-Connect to notify your system in realtime whenever the customer pays at the store.
@@ -423,8 +423,14 @@ These are the parameters that will be sent depending on whether the 7-CONNECT Re
 
 CLiQQ allows customers to make a transaction by just entering the needed information the merchant requires at the CLiQQ kiosk or CLiQQ mobile app. Once customer makes the transaction using CLiQQ kiosk or app, CLiQQ will dispense a payment slip containing a 7-Connect Reference number to be presented when paying at the counter.
 
-#### Process Flow
+<br>
 
+#### **Process Flow**
+
+![diagram](img/cliqq.png)
+
+<br>
+<br>
 #####**Request Parameters**
 
 The merchant should expect the following variables which will be passed via HTTP POST (with the parameters in the request content, not in the URL). Please refer to the section IV-A on handling payments. The CLiQQ service mandates the use of payload and paymentDetails to return transaction information that is entered by the customer at the kiosk or mobile app. The following describes the data that is sent to the merchant upon payment at the counter.
@@ -439,7 +445,7 @@ The merchant should expect the following variables which will be passed via HTTP
 | token | Text | Transaction Security Token This value must match the **SHA-1 digest** of:  type +merchantID + merchantRef + {transactionKey} where:<br><br>type - the value of the type variable<br>merchantID - provided by 7-Connect<br>merchantRef - the value of the merchantRef variable<br>transactionKey  - provided by 7-Connect<br><br>Example:<br>SHA-1 digest of:<br><code>CONFIRMtestmerchanttestmerchant003{628e936f45884030ac1f34bcde9c28efa6ae9c839623b45b8942bd4490e1f05d}</code><br> = **f46c33a0e2f35cb2321a4054ec2750f38a8f7a25** |
 | | | |
 
-#### Response Variable
+##### **Response Variable**
 
 In order to allow 7-Connect to confirm that the merchant has acknowledged the payment notification, the payment handler service must contain the following variables:
 
@@ -479,14 +485,14 @@ To test the ability of the 7-CONNECT Gateway to generate a 7-Connect Reference a
 
 Activities:
 
-| In-Charge | Activity | Expected Output |
-| ----- | ----- |
-| 7-Eleven | Provide merchant with account in the 7-Connect Test Environment<br><br>Test Environment URL: [https://testpay.cliqq.net](https://testpay.cliqq.net) | Merchant can log-in and see their transaction key for the test environment |
-| Merchant | Provide 7 - Eleven with postback URL for test environment<br><br>Create transactions using 7-Connect as the payment option | 7-Connect generates a 7-CONNECT reference number per purchase |
-| 7-Eleven | Configure 7-Connect to accomodate test postback URL<br><br>Simulate payments for created transactions | 7-Connect should not timed-out when communicating with the merchant<br><br>Merchant should receive payment confirmation from 7-Connect Gateway |
-| 7-Eleven | Provide merchant with account in the 7-Connect Production Environment<br><br>Production Environment URL: [https://pay.7-eleven.com.ph] (https://pay.7-eleven.com.ph) | Merchant can log-in and see their transaction key for the production environment |
-| Merchant | Provide 7-Eleven with postback URL for the production environment<br><br>Configure code with accordance to production transaction key | Merchant to be able to create a postback URL |
-| 7-Eleven | Configure 7-Connect to accomodate production postback URL | Merchant should receive payment confirmation from 7-Connect gateway when a transaction is paid |
+| Step | In-Charge | Activity |
+| ----- | ----- | ---- |
+| 1 | 7-Eleven | Provide merchant with account in the 7-Connect Test Environment<br><br>Test Environment URL: [https://testpay.cliqq.net](https://testpay.cliqq.net) | Merchant can log-in and see their transaction key for the test environment |
+| 2 | Merchant | Provide 7 - Eleven with postback URL for test environment<br><br>Create transactions using 7-Connect as the payment option | 7-Connect generates a 7-CONNECT reference number per purchase |
+| 3 | 7-Eleven | Configure 7-Connect to accomodate test postback URL<br><br>Simulate payments for created transactions | 7-Connect should not timed-out when communicating with the merchant<br><br>Merchant should receive payment confirmation from 7-Connect Gateway |
+| 4 | 7-Eleven | Provide merchant with account in the 7-Connect Production Environment<br><br>Production Environment URL: [https://pay.7-eleven.com.ph] (https://pay.7-eleven.com.ph) | Merchant can log-in and see their transaction key for the production environment |
+| 5 | Merchant | Provide 7-Eleven with postback URL for the production environment<br><br>Configure code with accordance to production transaction key | Merchant to be able to create a postback URL |
+| 6 | 7-Eleven | Configure 7-Connect to accomodate production postback URL | Merchant should receive payment confirmation from 7-Connect gateway when a transaction is paid |
 
 ### Transaction Status
 
@@ -498,5 +504,14 @@ Activities:
 | STIP | When a transaction is paid, it is inserted in a queue called STIP. Every 10 minutes 7-Connect will attempt to communicate to the merchant site for a payment posting. If successful, the transaction status will become POSTED. If after 10 tries and no successful posting occurs then the transaction will remain STIP. A transaction with an STIP status can be POSTED in 2 ways. First, by manually sending a post request to the merchant site ( this is done by a 7-Eleven admin). Second, it can be manually changed in the 7-Connect database, this method does not post to the merchant so no payment confirmation will occur. |
 | DECLINED | Transaction has been declined by the merchant. This will likely happen if the merchant accepts the transaction during validation but declined it during the confirm call. |
 
+### Materials
 
-
+You may use the following graphics to communicate to buyers that you accept 7-CONNECT. These are logos designed for use on your home page and in your checkout page. Using the 7-Eleven logo will allow your customers to easily recognize that payment can be made at any 7-Eleven store.<br>
+<br>
+250 px : ![image](img/7-eleven-250px.png) 
+![image](img/7-eleven-130px.png) 
+![image](img/7-eleven-65px.png) 
+<br>
+<br>
+The photo below shows how you can present the 7-CONNECT option in the payment method of your website. Use the text “Pay at any 7-Eleven store” or “Pay at 7-Eleven” to describe the 7-Connect payment option.<br>
+![image](img/paymethods_logo.png) 
