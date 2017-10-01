@@ -139,7 +139,7 @@
 <li>For Testing - <a href="https://testpay.cliqq.net/transact">https://testpay.cliqq.net/transact</a></li>
 <li>For Live Production - <a href="https://pay.7-eleven.com.ph/transact">https://pay.7-eleven.com.ph/transact</a></li>
 </ul>
-<p>To get the latest information and graphic logos, please visit the site: <a href="http://7-connect.philseven.com">http://7-connect.philseven.com</a></p>
+<p>For graphic logos that you can use, jump to <a href="#assets">Assets</a></p>
 <h2 id="iii-7-connect-web-services">III. 7-CONNECT Web Services</h2>
 <h3 id="a-7-connect-reference">A. 7-CONNECT Reference</h3>
 <p>7-CONNECT Reference is a 12-digit number issued by the 7-CONNECT gateway. This reference number will be presented at the store in order to transact customer's purchase under 7-CONNECT. You may use either a redirect page or an API request to obtain this reference number.</p>
@@ -164,7 +164,7 @@
  </ol></p>
 </blockquote>
 <h5 id="request-parameters">Request Parameters</h5>
-<p>Using HTTP Post or Get, the merchant site has to provide the 7-CONNECT Request URL with the parameters it requires to generate a 7-CONNECT Reference.  You will be provided with your own Merchant ID and Transaction Key after completing the merchant agreement.</p>
+<p>Using <code>HTTP POST</code> or <code>GET</code>, the merchant site has to provide the 7-CONNECT Request URL with the parameters it requires to generate a 7-CONNECT Reference.  You will be provided with your own Merchant ID and Transaction Key after completing the merchant agreement.</p>
 <table>
 <thead>
 <tr>
@@ -314,7 +314,7 @@ if (isset($error)) {
 
 <p><br></p>
 <h4 id="1b-creation-of-payment-reference-over-a-web-service">1B. Creation of payment reference over a web service</h4>
-<p>This allows more control on how payment instruction is displayed to customers. Merchant will display the payment instructions that include the 7-CONNECT Reference Number. We recommend to follow the format below:</p>
+<p>This allows more control on how payment instruction is displayed to customers. Merchant will display the payment instructions that include the 7-CONNECT Reference Number. We recommend the following format:</p>
 <ul>
 <li>Payment instructions</li>
 <li>7-CONNECT REFERENCE: (human readable with hyphens xxxx-xxxx-xxxx)</li>
@@ -325,7 +325,7 @@ if (isset($error)) {
 <li>Merchant Reference:</li>
 <li>Transaction Description:</li>
 </ul>
-<p>This is a web service that receives an HTTP POST request and returns a JSON response. Sends the specified data in a POST request to  the  HTTP server,  in  the  same  way  that a browser does when a user has filled in an HTML form and presses the submit button. This will cause curl to pass the data to the server using the content-type application/x-www-form-urlencoded.</p>
+<p>This is a web service that receives an <code>HTTP POST</code> request and returns a JSON response. Sends the specified data in a POST request to the  HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button. This will cause curl to pass the data to the server using the content-type application/x-www-form-urlencoded.</p>
 <h5 id="request-parameters_1">Request Parameters</h5>
 <table>
 <thead>
@@ -473,7 +473,7 @@ if (isset($error)) {
 -d &quot;merchantRef=6419705015&quot; \
 -d &quot;amount=100&quot; \
 -d &quot;token=235a23122139152ff830aa7fa1a876a95d4e365b&quot; \
--d &quot;email= [jpjamon@gmail.com](mailto:jpjamon@gmail.com)&quot; \
+-d &quot;email= [jpj@example.com](mailto:jpj@example.com)&quot; \
 -d &quot;expDate=20140730235959&quot; \
 -d &quot;receiptRemarks=ATI |^MerchRef: 6419705015&quot; \
 -d &quot;returnPaymentDetails=Return payment details here.&quot; \
@@ -500,20 +500,12 @@ if (isset($error)) {
 <p>Merchants should prepare a Payment Handler to process payment postings that were paid at the store. When a POS payment event is triggered, we’ll send a HTTP POST payload to the webhook’s configured URL. Your Payment Handler will then proceed to fulfill the customer's order by updating transaction records or balances and sending a voucher or e-ticket by email or SMS to the customer.</p>
 <p><img alt="diagram" src="./img/03-payment-flow.png" /></p>
 <p>7-CONNECT requires its merchants to have the following web services:</p>
-<blockquote>
-<p>VALIDATE (mandatory)</p>
-</blockquote>
+<p><strong>VALIDATE (mandatory)</strong></p>
 <p>This is used to verify the validity of a given Merchant Reference Number. Validate function can also be used for amount checking, account number validity, expiration checking, inventory availability and uptime inquiry.</p>
-<blockquote>
-<p>CONFIRM (mandatory)</p>
-</blockquote>
-<p>This is used to confirm the payment for a given Merchant Reference Number. Once a confirm request was processed by the merchant, it should reject the other confirm request sent with the same sevenConnectId.
-<br>
-<br>
-Communication will be done using <strong>HTTP Post</strong>.
-<br>
-<br></p>
-<h4 id="1-request-parameters"><strong>1. Request Parameters</strong></h4>
+<p><strong>CONFIRM (mandatory)</strong></p>
+<p>This is used to confirm the payment for a given Merchant Reference Number. Once a confirm request was processed by the merchant, it should reject the other confirm request sent with the same sevenConnectId.</p>
+<p>Communication will be done using <code>HTTP POST</code></p>
+<h5 id="request-parameters_2">Request Parameters</h5>
 <table>
 <thead>
 <tr>
@@ -568,7 +560,7 @@ Communication will be done using <strong>HTTP Post</strong>.
 </tr>
 </tbody>
 </table>
-<h4 id="2-response-parameters"><strong>2. Response Parameters</strong></h4>
+<h5 id="response_1">Response</h5>
 <table>
 <thead>
 <tr>
@@ -648,7 +640,7 @@ Communication will be done using <strong>HTTP Post</strong>.
 <pre><code>?type=CONFIRM&amp;merchantID=testmerchant&amp;merchantRef=testmerchant01&amp;amount=2500&amp;authCode=1040249589&amp;responseCode=SUCCESS&amp;responseDesc=SUCCESSFUL&amp;token=7a1b6c2212e92b2ba1a2ba2d7db4031a93086d0c
 </code></pre>
 
-<p><strong>3. Sample Code</strong></p>
+<p><strong>Sample Code</strong></p>
 <p>The following php code implements the merchant service that will handle VALIDATE and CONFIRM instructions coming from the 7-CONNECT gateway.</p>
 <pre><code>&lt;?php
 
@@ -942,11 +934,9 @@ containing a 7-CONNECT Reference number to be presented when paying at the count
 <p><br></p>
 <h4 id="process-flow"><strong>Process Flow</strong></h4>
 <p><img alt="diagram" src="./img/cliqq.png" /></p>
-<p><br>
-<br></p>
-<h5 id="request-parameters_2"><strong>Request Parameters</strong></h5>
+<h5 id="request-parameters_3"><strong>Request Parameters</strong></h5>
 <p>The merchant should expect the following variables which will be passed via 
-HTTP POST (with the parameters in the request content, not in the URL). 
+<code>HTTP POST</code> (with the parameters in the request content, not in the URL). 
 Please refer to the section IV-A on handling payments. The CLiQQ service 
 mandates the use of payload and paymentDetails to return transaction information 
 that is entered by the customer at the kiosk or mobile app. The following 
@@ -997,7 +987,7 @@ describes the data that is sent to the merchant upon payment at the counter.</p>
 </tr>
 </tbody>
 </table>
-<h5 id="response-variable"><strong>Response Variable</strong></h5>
+<h5 id="response-variable">Response Variable</h5>
 <p>In order to allow 7-CONNECT to confirm that the merchant has acknowledged the payment notification, the payment handler service must contain the following variables:</p>
 <table>
 <thead>
@@ -1140,16 +1130,13 @@ describes the data that is sent to the merchant upon payment at the counter.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="materials">Materials</h3>
-<p>You may use the following graphics to communicate to buyers that you accept 7-CONNECT. These are logos designed for use on your home page and in your checkout page. Using the 7-Eleven logo will allow your customers to easily recognize that payment can be made at any 7-Eleven store.<br>
-<br>
-250 px : <img alt="image" src="./img/7-eleven-250px.png" /> 
+<h3 id="assets">Assets</h3>
+<p>You may use the following graphics to communicate to buyers that you accept 7-CONNECT. These are logos designed for use on your home page and in your checkout page. Using the 7-Eleven logo will allow your customers to easily recognize that payment can be made at any 7-Eleven store.</p>
+<p>250 px : <img alt="image" src="./img/7-eleven-250px.png" /> 
 <img alt="image" src="./img/7-eleven-130px.png" /> 
-<img alt="image" src="./img/7-eleven-65px.png" /> 
-<br>
-<br>
-The photo below shows how you can present the 7-CONNECT option in the payment method of your website. Use the text “Pay at any 7-Eleven store” or “Pay at 7-Eleven” to describe the 7-CONNECT payment option.<br>
-<img alt="image" src="./img/paymethods_logo.png" /> </p>
+<img alt="image" src="./img/7-eleven-65px.png" /> </p>
+<p>This photo shows how you can present the 7-CONNECT option in the payment method of your website. Use the text “Pay at any 7-Eleven store” or “Pay at 7-Eleven” to describe the 7-CONNECT payment option.</p>
+<p><img alt="image" src="./img/paymethods_logo.png" /> </p>
               
             </div>
           </div>
@@ -1187,5 +1174,5 @@ The photo below shows how you can present the 7-CONNECT option in the payment me
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-10-01 04:56:15
+Build Date UTC : 2017-10-01 07:47:06
 -->
