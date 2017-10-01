@@ -132,7 +132,7 @@
 <p>Integrating to 7-CONNECT will require development of two points:</p>
 <ul>
 <li>7-CONNECT Reference Request: You will need to request for a 7-CONNECT Reference which will be used by customers to pay at the store.</li>
-<li>Merchant Payment API: This URL will enable 7-CONNECT to notify your system in realtime whenever the customer pays at the store.</li>
+<li>Merchant Webhook: The 7-CONNECT gateway will call your URL to <code>VALIDATE</code> (optional) and <code>CONFIRM</code> (mandatory) a payment transaction.</li>
 </ul>
 <p>These URLs will be used:</p>
 <ul>
@@ -1174,5 +1174,5 @@ describes the data that is sent to the merchant upon payment at the counter.</p>
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-10-01 07:47:06
+Build Date UTC : 2017-10-01 07:53:28
 -->
