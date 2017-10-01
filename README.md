@@ -7,3 +7,9 @@ payment convenience for your customers. Customers will be able to pay for online
 purchases at any 7-Eleven store.
 
 Copyright 2011, Philippine Seven Corporation and affiliates. All rights reserved.
+
+## Deployment
+
+```
+mkdocs gh-deploy
+```
