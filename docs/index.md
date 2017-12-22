@@ -83,7 +83,7 @@ Using `HTTP POST` or `GET`, the merchant site has to provide the 7-CONNECT Reque
 | merchantID | Text (15) | Required | Merchant's ID as provided by 7-CONNECT |
 | merchantRef | Text (40) | Required | Merchant's Reference Number |
 | amount | Number (12, 2) | Required | Transaction amount.<br><br>Format: XXXXXXXXXX.XX |
-| expDate | Number (14) | Optional | Transaction's expiration date/time.<br><br>Format: yyyyMMddHHmmss<br><br>If not specified, blank or malformed, the expiry date is set to the value defined in the merchant settings which is 2880 minutes. |
+| expDate | Text (14) | Optional | Transaction's expiration date/time.<br><br>Format: yyyyMMddHHmmss<br><br>If not specified, blank or malformed, the expiry date is set to the value defined in the merchant settings which is 2880 minutes. |
 | successURL | Text (300) | Required | The page to which 7-CONNECT redirects to after the user clicks on the Continue Browsing button. |
 | failURL | Text (300) | Required | The page to which 7-CONNECT redirects to after a failed transaction. |
 | token | Text | Required | Transaction Security Token<br><br>To create this, get the SHA-1 digest of:<br>*merchantID + merchantRef + {transactionKey}*<br><br>PHP code:<br><code>*$token = sha1($merchantID . $merchantRef . '{' . $transactionKey . '}');<br><br></code>transactionKey as provided by 7-CONNECT |
@@ -258,6 +258,7 @@ Communication will be done using `HTTP POST`
 
 | Name | Data Type | Required? | Description |
 | --- | --- | --- | --- |
+| sevenConnectId | Text | Yes | XXXX-XXXX-XXXX |
 | type | Text | Yes | Valid values: VALIDATE, CONFIRM |
 | merchantRef | Text (40) | Yes | Merchant's Reference Number |
 | amount | Number (12, 2) | Yes | Transaction Amount<br><br>Format: XXXXXXXXXX.XX |
@@ -283,7 +284,7 @@ Communication will be done using `HTTP POST`
 The format is :
 
 ```
-?type=CONFIRM&merchantID=merchantID\_value&merchantRef=merchantRef\_value&amount=amount\_value&authCode=authCode\_value&responseCode=responseCode\_value&responseDesc=responseDesc\_value&token=token\_value
+?type=CONFIRM&merchantID=merchantID_value&merchantRef=merchantRef_value&amount=amount_value&authCode=authCode_value&responseCode=responseCode_value&responseDesc=responseDesc_value&token=token_value
 ```
 
 Samples are :
@@ -291,13 +292,13 @@ Samples are :
 For DECLINED :
 
 ```
-?type=CONFIRM&merchantID=testmerchant&merchantRef=&amount=&authCode=&responseCode=DECLINED&responseDesc=DONT LEAVE ANY FIELDS BLANK&token=fe1047606531ebdbe00d1786c80c3ca7e54ce79a
+?type=CONFIRM&merchantRef=&amount=&authCode=&responseCode=DECLINED&responseDesc=DONT LEAVE ANY FIELDS BLANK&token=fe1047606531ebdbe00d1786c80c3ca7e54ce79a
 ```
 
 For SUCCESS :
 
 ```
-?type=CONFIRM&merchantID=testmerchant&merchantRef=testmerchant01&amount=2500&authCode=1040249589&responseCode=SUCCESS&responseDesc=SUCCESSFUL&token=7a1b6c2212e92b2ba1a2ba2d7db4031a93086d0c
+?type=CONFIRM&merchantRef=testmerchant01&amount=2500&authCode=1040249589&responseCode=SUCCESS&responseDesc=SUCCESSFUL&token=7a1b6c2212e92b2ba1a2ba2d7db4031a93086d0c
 ```
 
 **Sample Code**
@@ -414,6 +415,7 @@ Using HTTP Post or Get, the merchant site has to provide the 7-CONNECT Gateway w
 | 0.9 | 2013-10-07 | Added payLoad and returnPaymentDetails in the calling parameters. |
 | 1.1 | 2014-08-04 | Added REST style createReference service |
 | 1.2 | 2015-03-20 | Split introduction to "Overview" and "Getting Started"<br><br>Added subtopic in creating payment reference<br><br>Added required payload parameter for CLiQQ<br><br>"Response Parameter" changed to "Parameters sent to SuccessURL or FailURL"<br><br>Added description for Handling Payments<br><br>URLs included in "Getting Started" Topic<br><br>Added CLiQQ Parameters |
+| 1.3 | 2017-12-22 | Corrected webhook parameters  |
 
 ### Parameters sent to SuccessURL or FailURL
 
