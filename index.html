@@ -195,7 +195,7 @@
 </tr>
 <tr>
 <td>expDate</td>
-<td>Number (14)</td>
+<td>Text (14)</td>
 <td>Optional</td>
 <td>Transaction's expiration date/time.<br><br>Format: yyyyMMddHHmmss<br><br>If not specified, blank or malformed, the expiry date is set to the value defined in the merchant settings which is 2880 minutes.</td>
 </tr>
@@ -517,6 +517,12 @@ if (isset($error)) {
 </thead>
 <tbody>
 <tr>
+<td>sevenConnectId</td>
+<td>Text</td>
+<td>Yes</td>
+<td>XXXX-XXXX-XXXX</td>
+</tr>
+<tr>
 <td>type</td>
 <td>Text</td>
 <td>Yes</td>
@@ -628,16 +634,16 @@ if (isset($error)) {
 </tbody>
 </table>
 <p>The format is :</p>
-<pre><code>?type=CONFIRM&amp;merchantID=merchantID\_value&amp;merchantRef=merchantRef\_value&amp;amount=amount\_value&amp;authCode=authCode\_value&amp;responseCode=responseCode\_value&amp;responseDesc=responseDesc\_value&amp;token=token\_value
+<pre><code>?type=CONFIRM&amp;merchantID=merchantID_value&amp;merchantRef=merchantRef_value&amp;amount=amount_value&amp;authCode=authCode_value&amp;responseCode=responseCode_value&amp;responseDesc=responseDesc_value&amp;token=token_value
 </code></pre>
 
 <p>Samples are :</p>
 <p>For DECLINED :</p>
-<pre><code>?type=CONFIRM&amp;merchantID=testmerchant&amp;merchantRef=&amp;amount=&amp;authCode=&amp;responseCode=DECLINED&amp;responseDesc=DONT LEAVE ANY FIELDS BLANK&amp;token=fe1047606531ebdbe00d1786c80c3ca7e54ce79a
+<pre><code>?type=CONFIRM&amp;merchantRef=&amp;amount=&amp;authCode=&amp;responseCode=DECLINED&amp;responseDesc=DONT LEAVE ANY FIELDS BLANK&amp;token=fe1047606531ebdbe00d1786c80c3ca7e54ce79a
 </code></pre>
 
 <p>For SUCCESS :</p>
-<pre><code>?type=CONFIRM&amp;merchantID=testmerchant&amp;merchantRef=testmerchant01&amp;amount=2500&amp;authCode=1040249589&amp;responseCode=SUCCESS&amp;responseDesc=SUCCESSFUL&amp;token=7a1b6c2212e92b2ba1a2ba2d7db4031a93086d0c
+<pre><code>?type=CONFIRM&amp;merchantRef=testmerchant01&amp;amount=2500&amp;authCode=1040249589&amp;responseCode=SUCCESS&amp;responseDesc=SUCCESSFUL&amp;token=7a1b6c2212e92b2ba1a2ba2d7db4031a93086d0c
 </code></pre>
 
 <p><strong>Sample Code</strong></p>
@@ -867,6 +873,11 @@ if (isset($\_REQUEST['type'])) {
 <td>1.2</td>
 <td>2015-03-20</td>
 <td>Split introduction to "Overview" and "Getting Started"<br><br>Added subtopic in creating payment reference<br><br>Added required payload parameter for CLiQQ<br><br>"Response Parameter" changed to "Parameters sent to SuccessURL or FailURL"<br><br>Added description for Handling Payments<br><br>URLs included in "Getting Started" Topic<br><br>Added CLiQQ Parameters</td>
+</tr>
+<tr>
+<td>1.3</td>
+<td>2017-12-22</td>
+<td>Corrected webhook parameters</td>
 </tr>
 </tbody>
 </table>
@@ -1174,5 +1185,5 @@ describes the data that is sent to the merchant upon payment at the counter.</p>
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-10-01 07:53:28
+Build Date UTC : 2017-12-22 08:47:50
 -->
