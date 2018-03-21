@@ -137,7 +137,8 @@
 <p>These URLs will be used:</p>
 <ul>
 <li>For Testing - <a href="https://testpay.cliqq.net/transact">https://testpay.cliqq.net/transact</a></li>
-<li>For Live Production - <a href="https://pay.7-eleven.com.ph/transact">https://pay.7-eleven.com.ph/transact</a></li>
+<li>For Production (redirect) - <a href="https://pay.7-eleven.com.ph/transact">https://pay.7-eleven.com.ph/transact</a></li>
+<li>For Production (API) - <a href="https://pay.7-eleven.com.ph/v1/">https://pay.7-eleven.com.ph/v1/</a></li>
 </ul>
 <p>For graphic logos that you can use, jump to <a href="#assets">Assets</a></p>
 <h2 id="iii-7-connect-web-services">III. 7-CONNECT Web Services</h2>
@@ -165,11 +166,17 @@
 </blockquote>
 <h5 id="request-parameters">Request Parameters</h5>
 <p>The merchant site has to provide the 7-CONNECT Request URL with the parameters it requires to generate a 7-CONNECT Reference.  You will be provided with your own Merchant ID and Transaction Key after completing the merchant agreement.</p>
-<p>Request Type: HTTP POST
-Content-Type: application/x-www-form-urlencoded 
-Parameters: query string</p>
-<p>Request Type: HTTP GET
-Parameters: query string</p>
+<ul>
+<li>Request Type: HTTP POST</li>
+<li>Content-Type: application/x-www-form-urlencoded </li>
+<li>
+<p>Parameters: query string</p>
+</li>
+<li>
+<p>Request Type: HTTP GET</p>
+</li>
+<li>Parameters: query string</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -337,6 +344,7 @@ if (isset($error)) {
 <li>Transaction Description:</li>
 </ul>
 <p>This is a web service that receives an <code>HTTP POST</code> request and returns a JSON response. Sends the specified data in a POST request to the  HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button. This will cause curl to pass the data to the server using the content-type application/x-www-form-urlencoded.</p>
+<p><code>POST /reference</code></p>
 <h5 id="request-parameters_1">Request Parameters</h5>
 <table>
 <thead>
@@ -407,6 +415,12 @@ if (isset($error)) {
 <td>Text</td>
 <td>Optional</td>
 <td>Used for notifications from 7-CONNECT to the customer. If not provided by the merchant, a button will appear in the instruction page to allow the customer to enter their email address.</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>Text</td>
+<td>Optional</td>
+<td>Used for customer service. Format: <code>09xxxxxxxxx</code></td>
 </tr>
 <tr>
 <td>payLoad</td>
@@ -1199,5 +1213,5 @@ describes the data that is sent to the merchant upon payment at the counter.</p>
 
 <!--
 MkDocs version : 0.17.3
-Build Date UTC : 2018-03-21 09:39:53
+Build Date UTC : 2018-03-21 09:54:30
 -->
